@@ -87,10 +87,7 @@ function Home() {
               poster={heroImage}
               aria-label="Portfolio reel placeholder"
             >
-              <p>
-                Add video files under /react-site/public/assets to enable
-                playback.
-              </p>
+              <p>Add video files under /public/assets to enable playback.</p>
             </video>
           </div>
         </div>
