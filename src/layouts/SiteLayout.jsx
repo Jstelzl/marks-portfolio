@@ -180,7 +180,7 @@ function SiteLayout() {
                     Contact
                   </NavLink>
                 </li>
-                <li className="menu-item  menu-item--quote">
+                <li className="menu-item  menu-item--quote mobile-only-quote">
                   <NavLink
                     className={({ isActive }) =>
                       `nav-link${
@@ -202,7 +202,7 @@ function SiteLayout() {
               onClick={() => setNavOpen(false)}
             />
 
-            <div className="header__featured-link">
+            <div className="header__featured-link desktop-only-quote">
               <NavLink className="btn  btn-primary" to="/contact">
                 Get a Quote
               </NavLink>

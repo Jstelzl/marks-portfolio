@@ -14,17 +14,30 @@ body {
   background-color: #ffffff;
 }
 
+.menu-item--home .home-icon,
+.menu-item--home .home-icon::before,
+.menu-item--home .home-icon::after {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
+
 @media (max-width: 991px) {
+  /* hide the large featured button on small screens */
   .header__featured-link {
-    display: none;
+    display: none !important;
   }
 }
 
-.menu-item--quote {
-  display: none;
-}
-
 @media (min-width: 992px) {
+  /* hide the in-nav quote item on desktop */
+  .mobile-only-quote {
+    display: none !important;
+  }
+
+  /* hide the nav close button on desktop (keeps it only on mobile) */
   .header__nav-close {
     display: none !important;
   }
