@@ -48,12 +48,6 @@ function Contact() {
 
       <section className="call-to-action  clearfix">
         <div className="call-to-action__text">
-          <h3 className="call-to-action__title">
-            Ready to plan your next project?
-          </h3>
-          <p className="call-to-action__subtitle">
-            Request a walkthrough and a detailed estimate.
-          </p>
         </div>
         <div className="call-to-action__button">
           <NavLink className="btn  btn-primary" to="/contact">

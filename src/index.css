@@ -5,3 +5,30 @@ body {
 #root {
   min-height: 100vh;
 }
+
+.site-header {
+  margin-bottom: 0;
+}
+
+.header {
+  background-color: #ffffff;
+}
+
+.portfolio-grid__card-block {
+  min-height: calc(5 * 1.4em + 1.75rem);
+  padding-bottom: 2.75rem;
+}
+
+.portfolio-grid__card-title,
+.portfolio-grid__card-text {
+  line-height: 1.4;
+}
+
+.portfolio-grid__card-link {
+  position: absolute;
+  right: 0.9375rem;
+  bottom: 0.75rem;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+}
+

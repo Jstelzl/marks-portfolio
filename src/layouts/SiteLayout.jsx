@@ -1,59 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 
 const logoPath = '/assets/images/logo.png'
 
 function SiteLayout() {
   const [navOpen, setNavOpen] = useState(false)
-
-  useEffect(() => {
-    document.body.classList.add(
-      'sticky-navigation',
-      'page-template-template-front-page-slider',
-    )
-
-    return () => {
-      document.body.classList.remove(
-        'sticky-navigation',
-        'page-template-template-front-page-slider',
-        'is-sticky-nav',
-      )
-    }
-  }, [])
-
-  useEffect(() => {
-    const target = document.querySelector('.js-sticky-offset')
-    if (!target) {
-      return undefined
-    }
-
-    let stickyOffset = 0
-    const updateOffset = () => {
-      stickyOffset = target.getBoundingClientRect().top + window.scrollY
-    }
-
-    const updateSticky = () => {
-      document.body.classList.toggle(
-        'is-sticky-nav',
-        window.scrollY > stickyOffset,
-      )
-    }
-
-    const handleResize = () => {
-      updateOffset()
-      updateSticky()
-    }
-
-    updateOffset()
-    updateSticky()
-    window.addEventListener('scroll', updateSticky)
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('scroll', updateSticky)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
 
   return (
     <div className="boxed-container">
@@ -148,22 +99,6 @@ function SiteLayout() {
                 <p>Remodels, additions, ADUs</p>
                 <p>Repairs and finish carpentry</p>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="footer-middle">
-          <i className="fa  fa-2x  fa-cc-visa"></i> &nbsp;
-          <i className="fa  fa-2x  fa-cc-mastercard"></i> &nbsp;
-          <i className="fa  fa-2x  fa-cc-amex"></i> &nbsp;
-          <i className="fa  fa-2x  fa-cc-paypal"></i>
-        </div>
-        <div className="footer-bottom">
-          <div className="container">
-            <div className="footer-bottom__left">
-              Contractor portfolio template.
-            </div>
-            <div className="footer-bottom__right">
-              &copy; 2026 Mark Stelzl. All rights reserved.
             </div>
           </div>
         </div>

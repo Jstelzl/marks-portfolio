@@ -16,10 +16,10 @@ function Portfolio() {
               <span className="portfolio-grid__nav-link">All</span>
             </li>
             <li className="portfolio-grid__nav-item">
-              <span className="portfolio-grid__nav-link">Residential</span>
+              <span className="portfolio-grid__nav-link">Exterier</span>
             </li>
             <li className="portfolio-grid__nav-item">
-              <span className="portfolio-grid__nav-link">Commercial</span>
+              <span className="portfolio-grid__nav-link">Interier</span>
             </li>
             <li className="portfolio-grid__nav-item">
               <span className="portfolio-grid__nav-link">Remodels</span>
@@ -38,6 +38,9 @@ function Portfolio() {
                 <div className="portfolio-grid__card-block">
                   <h5 className="portfolio-grid__card-title">{item.title}</h5>
                   <p className="portfolio-grid__card-text">{item.subtitle}</p>
+                <a className="portfolio-grid__card-link btn" href="#">
+                  View
+                </a>
                 </div>
               </div>
             </div>

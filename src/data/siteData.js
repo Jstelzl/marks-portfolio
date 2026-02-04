@@ -1,6 +1,4 @@
 export const heroImage = '/assets/images/subpage_bg.jpg'
-export const fallbackImage = '/assets/images/404.png'
-
 export const services = [
   {
     icon: 'fa-home',
@@ -33,7 +31,7 @@ export const portfolioItems = [
   {
     title: 'Retail Store Refresh',
     subtitle: 'Interior build-out + finish work',
-    image: fallbackImage,
+    image: heroImage,
   },
   {
     title: 'Full Home Renovation',
