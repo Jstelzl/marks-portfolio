@@ -14,6 +14,128 @@ body {
   background-color: #ffffff;
 }
 
+@media (max-width: 991px) {
+  .header__featured-link {
+    display: none;
+  }
+}
+
+.menu-item--quote {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .header__nav-close {
+    display: none !important;
+  }
+}
+
+.header__navbar-toggler.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 0.9rem;
+}
+
+.header__navbar-toggler .hamburger {
+  padding-right: 0 !important;
+}
+
+@media (max-width: 991px) {
+  .nav-open {
+    overflow: hidden;
+  }
+
+  .header__navigation {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    background: #ffffff;
+    padding: 5rem 2rem 2rem;
+    z-index: 20;
+    transform: translateY(-100%);
+    transition: transform 200ms ease-out;
+  }
+
+  .header__navigation.in {
+    transform: translateY(0);
+  }
+
+  .header__navigation.in .menu-item--quote {
+    display: block;
+  }
+
+  .header__nav-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    border: 0;
+    background: transparent;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #000000;
+  }
+
+  .main-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  .main-navigation .menu-item {
+    margin: 0;
+  }
+
+  .menu-item--home .home-icon {
+    font-size: 2rem;
+  }
+
+  .main-navigation a {
+    color: #999999;
+    display: inline-block;
+    padding-bottom: 0.25rem;
+    font-size: 2rem;
+    text-decoration: none !important;
+    box-shadow: none;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    position: relative;
+    background: none;
+    border-bottom: 0.25rem solid transparent !important;
+  }
+
+  .header__navigation.in .main-navigation a {
+    border-bottom: 0.25rem solid transparent !important;
+  }
+
+  .header__navigation.in .main-navigation .menu-item:hover > a,
+  .header__navigation.in .main-navigation .menu-item:focus-within > a,
+  .header__navigation.in .main-navigation a:hover,
+  .header__navigation.in .main-navigation a:focus,
+  .header__navigation.in .main-navigation .nav-link.is-active {
+    color: #edac15 !important;
+    border-bottom-color: #edac15 !important;
+  }
+
+  .mobile-nav-overlay {
+    display: none;
+  }
+
+  .mobile-nav-overlay.is-open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+  }
+}
+
+
+
 .portfolio-grid__card-block {
   min-height: calc(5 * 1.4em + 1.75rem);
   padding-bottom: 2.75rem;

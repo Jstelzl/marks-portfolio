@@ -1,10 +1,54 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 
 const logoPath = '/assets/images/logo.png'
 
 function SiteLayout() {
   const [navOpen, setNavOpen] = useState(false)
+  const [hoveredItem, setHoveredItem] = useState(null)
+
+  useEffect(() => {
+    document.body.classList.toggle('nav-open', navOpen)
+    return () => document.body.classList.remove('nav-open')
+  }, [navOpen])
+
+  const navHoverStyle = useMemo(
+    () => ({
+      color: '#edac15',
+      borderBottom: '0.25rem solid #edac15',
+    }),
+    [],
+  )
+
+  const handleNavPointerMove = (event) => {
+    const item = event.target.closest('[data-nav-key]')
+    if (item?.dataset?.navKey) {
+      setHoveredItem(item.dataset.navKey)
+    }
+  }
+
+  const handleNavPointerLeave = () => {
+    setHoveredItem(null)
+  }
+
+  const handleMobileClick = (key) => {
+    setHoveredItem(key)
+    window.setTimeout(() => {
+      setNavOpen(false)
+      setHoveredItem(null)
+    }, 150)
+  }
+
+  const makeLinkHandlers = (key) => ({
+    onMouseEnter: () => setHoveredItem(key),
+    onMouseLeave: () => setHoveredItem(null),
+    onFocus: () => setHoveredItem(key),
+    onBlur: () => setHoveredItem(null),
+    onMouseOver: () => setHoveredItem(key),
+    onMouseMove: () => setHoveredItem(key),
+    onPointerMove: () => setHoveredItem(key),
+    onClick: () => handleMobileClick(key),
+  })
 
   return (
     <div className="boxed-container">
@@ -31,39 +75,132 @@ function SiteLayout() {
               onClick={() => setNavOpen((prev) => !prev)}
               aria-expanded={navOpen}
               aria-controls="structurepress-main-navigation"
+              aria-label="Toggle navigation"
             >
-              <i className="fa  fa-bars  hamburger"></i> <span>MENU</span>
+              <i className="fa  fa-bars  hamburger"></i>
             </button>
 
             <nav
               className={`header__navigation  collapse  navbar-toggleable-md  js-sticky-offset${
-                navOpen ? ' show' : ''
+                navOpen ? ' in' : ''
               }`}
               aria-label="Main Menu"
               id="structurepress-main-navigation"
+              onMouseMove={handleNavPointerMove}
+              onMouseLeave={handleNavPointerLeave}
+              onPointerMove={handleNavPointerMove}
+              onPointerLeave={handleNavPointerLeave}
             >
-              <NavLink className="home-icon" to="/">
-                <i className="fa  fa-home"></i>
-              </NavLink>
+              {navOpen ? (
+                <button
+                  className="header__nav-close"
+                  type="button"
+                  onClick={() => setNavOpen(false)}
+                  aria-label="Close navigation"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              ) : null}
               <ul
                 className="main-navigation  js-main-nav"
                 role="menubar"
-                onClick={() => setNavOpen(false)}
               >
-                <li className="menu-item">
-                  <NavLink to="/services">Services</NavLink>
+                <li className="menu-item  menu-item--home">
+                  <NavLink
+                    className={({ isActive }) =>
+                      `home-icon nav-link${
+                        hoveredItem === 'home' ? ' is-hovered' : ''
+                      }${isActive ? ' is-active' : ''}`
+                    }
+                    data-nav-key="home"
+                    to="/"
+                    style={hoveredItem === 'home' ? navHoverStyle : undefined}
+                    {...makeLinkHandlers('home')}
+                  >
+                    <i className="fa  fa-home"></i>
+                  </NavLink>
                 </li>
                 <li className="menu-item">
-                  <NavLink to="/portfolio">Portfolio</NavLink>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `nav-link${
+                        hoveredItem === 'services' ? ' is-hovered' : ''
+                      }${isActive ? ' is-active' : ''}`
+                    }
+                    data-nav-key="services"
+                    to="/services"
+                    style={hoveredItem === 'services' ? navHoverStyle : undefined}
+                    {...makeLinkHandlers('services')}
+                  >
+                    Services
+                  </NavLink>
                 </li>
                 <li className="menu-item">
-                  <NavLink to="/about">About</NavLink>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `nav-link${
+                        hoveredItem === 'portfolio' ? ' is-hovered' : ''
+                      }${isActive ? ' is-active' : ''}`
+                    }
+                    data-nav-key="portfolio"
+                    to="/portfolio"
+                    style={hoveredItem === 'portfolio' ? navHoverStyle : undefined}
+                    {...makeLinkHandlers('portfolio')}
+                  >
+                    Portfolio
+                  </NavLink>
                 </li>
                 <li className="menu-item">
-                  <NavLink to="/contact">Contact</NavLink>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `nav-link${
+                        hoveredItem === 'about' ? ' is-hovered' : ''
+                      }${isActive ? ' is-active' : ''}`
+                    }
+                    data-nav-key="about"
+                    to="/about"
+                    style={hoveredItem === 'about' ? navHoverStyle : undefined}
+                    {...makeLinkHandlers('about')}
+                  >
+                    About
+                  </NavLink>
+                </li>
+                <li className="menu-item">
+                  <NavLink
+                    className={({ isActive }) =>
+                      `nav-link${
+                        hoveredItem === 'contact' ? ' is-hovered' : ''
+                      }${isActive ? ' is-active' : ''}`
+                    }
+                    data-nav-key="contact"
+                    to="/contact"
+                    style={hoveredItem === 'contact' ? navHoverStyle : undefined}
+                    {...makeLinkHandlers('contact')}
+                  >
+                    Contact
+                  </NavLink>
+                </li>
+                <li className="menu-item  menu-item--quote">
+                  <NavLink
+                    className={({ isActive }) =>
+                      `nav-link${
+                        hoveredItem === 'quote' ? ' is-hovered' : ''
+                      }${isActive ? ' is-active' : ''}`
+                    }
+                    data-nav-key="quote"
+                    to="/contact"
+                    style={hoveredItem === 'quote' ? navHoverStyle : undefined}
+                    {...makeLinkHandlers('quote')}
+                  >
+                    Get a Quote
+                  </NavLink>
                 </li>
               </ul>
             </nav>
+            <div
+              className={`mobile-nav-overlay${navOpen ? ' is-open' : ''}`}
+              onClick={() => setNavOpen(false)}
+            />
 
             <div className="header__featured-link">
               <NavLink className="btn  btn-primary" to="/contact">
