@@ -12,6 +12,86 @@ body {
 
 .header {
   background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Header inner: flex row on desktop so logo sits beside nav */
+.header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1rem;
+}
+
+@media (min-width: 992px) {
+  .header__inner {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+}
+
+/* Brand wrapper: contains logo, prevents overflow */
+.header__brand {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.header__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.header__logo img {
+  max-width: 300px;
+  max-height: 100px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 1rem 0;
+  display: block;
+}
+
+@media (max-width: 991px) {
+  .header__inner {
+    justify-content: space-between;
+  }
+
+  .header__logo img {
+    max-width: 230px;
+    max-height: 78px;
+  }
+}
+
+@media (max-width: 575px) {
+  .header__logo img {
+    max-width: 190px;
+    max-height: 64px;
+  }
+}
+
+/* Override theme floats so flex layout works */
+@media (min-width: 992px) {
+  .header__logo,
+  .header__navigation,
+  .header__featured-link {
+    float: none !important;
+  }
+
+  .header__navigation {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header__featured-link {
+    flex-shrink: 0;
+  }
 }
 
 .menu-item--home .home-icon,
@@ -22,6 +102,13 @@ body {
   background: transparent !important;
   margin-right: 0 !important;
   padding-right: 0 !important;
+}
+
+/* Extra space between home icon and Services */
+@media (min-width: 992px) {
+  .menu-item--home + .menu-item {
+    margin-left: 1.5rem;
+  }
 }
 
 @media (max-width: 991px) {
@@ -48,6 +135,13 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0.75rem 0.9rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 992px) {
+  .header__navbar-toggler {
+    display: none;
+  }
 }
 
 .header__navbar-toggler .hamburger {

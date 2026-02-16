@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 
-const logoPath = '/assets/images/logo.png'
+const logoPath = '/assets/images/colored-logo.png'
 
 function SiteLayout() {
   const [navOpen, setNavOpen] = useState(false)
@@ -59,68 +59,69 @@ function SiteLayout() {
 
         <div className="header">
           <div className="container">
-            <div className="header__logo">
-              <NavLink to="/">
-                <img
-                  src={logoPath}
-                  alt="Construction Contractor Portfolio"
-                  className="img-fluid"
-                />
-              </NavLink>
-            </div>
+            <div className="header__inner">
+              <div className="header__brand">
+                <div className="header__logo">
+                  <img
+                    src={logoPath}
+                    alt="Construction Contractor Portfolio"
+                    className="img-fluid"
+                  />
+                </div>
+              </div>
 
-            <button
-              className="btn  btn-primary  header__navbar-toggler  hidden-lg-up"
-              type="button"
-              onClick={() => setNavOpen((prev) => !prev)}
-              aria-expanded={navOpen}
-              aria-controls="structurepress-main-navigation"
-              aria-label="Toggle navigation"
-            >
-              <i className="fa  fa-bars  hamburger"></i>
-            </button>
-
-            <nav
-              className={`header__navigation  collapse  navbar-toggleable-md  js-sticky-offset${
-                navOpen ? ' in' : ''
-              }`}
-              aria-label="Main Menu"
-              id="structurepress-main-navigation"
-              onMouseMove={handleNavPointerMove}
-              onMouseLeave={handleNavPointerLeave}
-              onPointerMove={handleNavPointerMove}
-              onPointerLeave={handleNavPointerLeave}
-            >
-              {navOpen ? (
-                <button
-                  className="header__nav-close"
-                  type="button"
-                  onClick={() => setNavOpen(false)}
-                  aria-label="Close navigation"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              ) : null}
-              <ul
-                className="main-navigation  js-main-nav"
-                role="menubar"
+              <button
+                className="btn  btn-primary  header__navbar-toggler  hidden-lg-up"
+                type="button"
+                onClick={() => setNavOpen((prev) => !prev)}
+                aria-expanded={navOpen}
+                aria-controls="structurepress-main-navigation"
+                aria-label="Toggle navigation"
               >
-                <li className="menu-item  menu-item--home">
-                  <NavLink
-                    className={({ isActive }) =>
-                      `home-icon nav-link${
-                        hoveredItem === 'home' ? ' is-hovered' : ''
-                      }${isActive ? ' is-active' : ''}`
-                    }
-                    data-nav-key="home"
-                    to="/"
-                    style={hoveredItem === 'home' ? navHoverStyle : undefined}
-                    {...makeLinkHandlers('home')}
+                <i className="fa  fa-bars  hamburger"></i>
+              </button>
+
+              <nav
+                className={`header__navigation  collapse  navbar-toggleable-md  js-sticky-offset${
+                  navOpen ? ' in' : ''
+                }`}
+                aria-label="Main Menu"
+                id="structurepress-main-navigation"
+                onMouseMove={handleNavPointerMove}
+                onMouseLeave={handleNavPointerLeave}
+                onPointerMove={handleNavPointerMove}
+                onPointerLeave={handleNavPointerLeave}
+              >
+                {navOpen ? (
+                  <button
+                    className="header__nav-close"
+                    type="button"
+                    onClick={() => setNavOpen(false)}
+                    aria-label="Close navigation"
                   >
-                    <i className="fa  fa-home"></i>
-                  </NavLink>
-                </li>
-                <li className="menu-item">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                ) : null}
+                <ul
+                  className="main-navigation  js-main-nav"
+                  role="menubar"
+                >
+                  <li className="menu-item  menu-item--home">
+                    <NavLink
+                      className={({ isActive }) =>
+                        `home-icon nav-link${
+                          hoveredItem === 'home' ? ' is-hovered' : ''
+                        }${isActive ? ' is-active' : ''}`
+                      }
+                      data-nav-key="home"
+                      to="/"
+                      style={hoveredItem === 'home' ? navHoverStyle : undefined}
+                      {...makeLinkHandlers('home')}
+                    >
+                      <i className="fa  fa-home"></i>
+                    </NavLink>
+                  </li>
+                  <li className="menu-item">
                   <NavLink
                     className={({ isActive }) =>
                       `nav-link${
@@ -197,16 +198,17 @@ function SiteLayout() {
                 </li>
               </ul>
             </nav>
-            <div
-              className={`mobile-nav-overlay${navOpen ? ' is-open' : ''}`}
-              onClick={() => setNavOpen(false)}
-            />
-
             <div className="header__featured-link desktop-only-quote">
               <NavLink className="btn  btn-primary" to="/contact">
                 Get a Quote
               </NavLink>
             </div>
+            </div>
+
+            <div
+              className={`mobile-nav-overlay${navOpen ? ' is-open' : ''}`}
+              onClick={() => setNavOpen(false)}
+            />
           </div>
         </div>
       </header>
