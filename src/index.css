@@ -118,11 +118,23 @@ body {
   }
 }
 
+/* No text-decoration underline on nav links - yellow border indicates active/hover */
+.main-navigation > .menu-item > a.nav-link,
+.main-navigation > .menu-item > a.nav-link:focus,
+.main-navigation > .menu-item > a.nav-link:active {
+  text-decoration: none !important;
+}
+
 /* Active nav link - same yellow bar as hover, persists until user navigates elsewhere */
 @media (min-width: 992px) {
   .main-navigation > .menu-item > a.nav-link.is-active {
     color: #333333;
     border-bottom: 0.25rem solid #edac15;
+  }
+
+  /* Hide active underline when hovering over another nav option */
+  .header__navigation.nav-has-hover .main-navigation > .menu-item > a.nav-link.is-active:not(.is-hovered) {
+    border-bottom-color: transparent;
   }
 }
 
@@ -243,6 +255,11 @@ body {
     border-bottom-color: #edac15 !important;
   }
 
+  /* Hide active underline when hovering over another nav option (mobile) */
+  .header__navigation.in.nav-has-hover .main-navigation .nav-link.is-active:not(.is-hovered) {
+    border-bottom-color: transparent !important;
+  }
+
   .mobile-nav-overlay {
     display: none;
   }
@@ -306,7 +323,7 @@ body {
   box-shadow: none;
   padding-left: 1rem;
   border-left: 3px solid transparent;
-  color: #539ad0;
+  color: #1e5a8a;
   transition: color 200ms ease-out, border-color 200ms ease-out;
 }
 
@@ -315,8 +332,8 @@ body {
 .portfolio-grid__view-all .btn:active {
   background: none;
   box-shadow: none;
-  color: #539ad0;
-  border-left-color: #539ad0;
+  color: #1e5a8a;
+  border-left-color: #1e5a8a;
 }
 
 .portfolio-grid__card {
@@ -385,6 +402,13 @@ body {
   bottom: 0.75rem;
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;
+  color: #1e5a8a;
+}
+
+.portfolio-grid__card-link:hover,
+.portfolio-grid__card-link:focus {
+  color: #164a6e;
+  text-decoration: none;
 }
 
 /* Portfolio filter buttons - reset to match nav-link style */
@@ -562,6 +586,61 @@ body {
 @media (min-width: 768px) {
   .contact-us-today .row > [class*="col-"]:last-child {
     margin-bottom: 0;
+  }
+}
+
+/* Bio section - centered in parent, left-aligned text */
+.bio-section {
+  text-align: left;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem 0;
+}
+
+.bio-section__title {
+  color: #000000;
+  font-weight: bold;
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+}
+
+.bio-section__text {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333333;
+}
+
+.bio-section__button {
+  display: inline-block;
+  padding: 0.35rem 1.25rem;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  background: #1e5a8a;
+  background-image: none;
+  border-color: #1e5a8a;
+  color: #ffffff;
+}
+
+.bio-section__button:hover {
+  background: #164a6e;
+  background-image: none;
+  border-color: #164a6e;
+  color: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .bio-section {
+    padding: 2.5rem 0;
+  }
+
+  .bio-section__title {
+    font-size: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .bio-section__text {
+    margin-bottom: 2rem;
   }
 }
 

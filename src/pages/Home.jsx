@@ -32,25 +32,18 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="row">
-        <div className="col-xs-12 text-xs-center">
-          <h2>Contracting Services</h2>
-          <p>
-            Reliable construction services built around clear scope, pricing,
-            and timelines.
-          </p>
-        </div>
-        {services.map((service) => (
-          <div className="col-xs-12  col-md-4" key={service.title}>
-            <div className="icon-box">
-              <i className={`fa  ${service.icon}  fa-3x`}></i>
-              <div className="icon-box__text">
-                <h4 className="icon-box__title">{service.title}</h4>
-                <span className="icon-box__subtitle">{service.text}</span>
-              </div>
-            </div>
-          </div>
-        ))}
+
+      <section className="bio-section">
+        <h2 className="bio-section__title">About Our Team</h2>
+        <p className="bio-section__text">
+          We are a team of licensed contractors dedicated to quality craftsmanship,
+          clear communication, and lasting results. With years of experience in
+          residential and light commercial construction, we bring expertise and
+          reliability to every project.
+        </p>
+        <NavLink className="btn  btn-primary  bio-section__button" to="/contact">
+          Get a free project estimate today
+        </NavLink>
       </section>
 
       <section className="portfolio-grid  portfolio-grid--recent">
@@ -83,6 +76,27 @@ function Home() {
             View All Projects
           </NavLink>
         </div>
+      </section>
+
+      <section className="row">
+        <div className="col-xs-12 text-xs-center">
+          <h2>Contracting Services</h2>
+          <p>
+            Reliable construction services built around clear scope, pricing,
+            and timelines.
+          </p>
+        </div>
+        {services.map((service) => (
+          <div className="col-xs-12  col-md-4" key={service.title}>
+            <div className="icon-box">
+              <i className={`fa  ${service.icon}  fa-3x`}></i>
+              <div className="icon-box__text">
+                <h4 className="icon-box__title">{service.title}</h4>
+                <span className="icon-box__subtitle">{service.text}</span>
+              </div>
+            </div>
+          </div>
+        ))}
       </section>
 
       <section className="row">

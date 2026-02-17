@@ -20,14 +20,7 @@ function SiteLayout() {
     [],
   )
 
-  const handleNavPointerMove = (event) => {
-    const item = event.target.closest('[data-nav-key]')
-    if (item?.dataset?.navKey) {
-      setHoveredItem(item.dataset.navKey)
-    }
-  }
-
-  const handleNavPointerLeave = () => {
+  const handleNavLeave = () => {
     setHoveredItem(null)
   }
 
@@ -44,9 +37,6 @@ function SiteLayout() {
     onMouseLeave: () => setHoveredItem(null),
     onFocus: () => setHoveredItem(key),
     onBlur: () => setHoveredItem(null),
-    onMouseOver: () => setHoveredItem(key),
-    onMouseMove: () => setHoveredItem(key),
-    onPointerMove: () => setHoveredItem(key),
     onClick: () => handleMobileClick(key),
   })
 
@@ -84,13 +74,10 @@ function SiteLayout() {
               <nav
                 className={`header__navigation  collapse  navbar-toggleable-md  js-sticky-offset${
                   navOpen ? ' in' : ''
-                }`}
+                }${hoveredItem ? ' nav-has-hover' : ''}`}
                 aria-label="Main Menu"
                 id="structurepress-main-navigation"
-                onMouseMove={handleNavPointerMove}
-                onMouseLeave={handleNavPointerLeave}
-                onPointerMove={handleNavPointerMove}
-                onPointerLeave={handleNavPointerLeave}
+                onMouseLeave={handleNavLeave}
               >
                 {navOpen ? (
                   <button
@@ -194,14 +181,14 @@ function SiteLayout() {
                     style={hoveredItem === 'quote' ? navHoverStyle : undefined}
                     {...makeLinkHandlers('quote')}
                   >
-                    Free Quote
+                    Free Estimate
                   </NavLink>
                 </li>
               </ul>
             </nav>
             <div className="header__featured-link desktop-only-quote">
               <NavLink className="btn  btn-primary" to="/contact">
-                Free Quote
+                Free Estimate
               </NavLink>
             </div>
             </div>
