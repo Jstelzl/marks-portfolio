@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { NavLink, Outlet } from 'react-router-dom'
 import { CallConfirmContext } from '../context/CallConfirmContext'
 import { shouldSkipCallConfirmation } from '../utils/callConfirm'
@@ -10,6 +11,7 @@ function SiteLayout() {
   const [navOpen, setNavOpen] = useState(false)
   const [hoveredItem, setHoveredItem] = useState(null)
   const [showCallConfirm, setShowCallConfirm] = useState(false)
+  const footerRef = useRef(null)
 
   const initiateCall = useCallback(() => {
     if (shouldSkipCallConfirmation()) {
@@ -33,6 +35,24 @@ function SiteLayout() {
     document.body.classList.toggle('nav-open', navOpen)
     return () => document.body.classList.remove('nav-open')
   }, [navOpen])
+
+  useLayoutEffect(() => {
+    if (!showCallConfirm || !footerRef.current) return
+    const el = footerRef.current
+    const updateHeight = () => {
+      const h = el.offsetHeight
+      document.documentElement.style.setProperty('--call-confirm-footer-height', `${h}px`)
+    }
+    updateHeight()
+    const ro = new ResizeObserver(updateHeight)
+    ro.observe(el)
+    window.addEventListener('resize', updateHeight)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', updateHeight)
+      document.documentElement.style.removeProperty('--call-confirm-footer-height')
+    }
+  }, [showCallConfirm])
 
   const navHoverStyle = useMemo(
     () => ({
@@ -223,7 +243,7 @@ function SiteLayout() {
         </div>
       </div>
 
-      <footer className="footer">
+      <footer className="footer" ref={footerRef}>
         <div className="footer-top">
           <div className="container">
             <div className="row  footer-top__row">
@@ -268,39 +288,41 @@ function SiteLayout() {
         </div>
       </footer>
 
-      {/* Call confirmation modal - custom instead of window.confirm for reliability */}
-      {showCallConfirm && (
-        <div
-          className="call-confirm-overlay"
-          onClick={() => setShowCallConfirm(false)}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="call-confirm-title"
-        >
+      {/* Call confirmation - rendered via portal to body, bar at top on desktop, bottom on mobile */}
+      {showCallConfirm &&
+        createPortal(
           <div
-            className="call-confirm-dialog"
-            onClick={(e) => e.stopPropagation()}
+            className="call-confirm-overlay"
+            onClick={() => setShowCallConfirm(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="call-confirm-title"
           >
-            <h3 id="call-confirm-title">Call +1 (704) 219-1589?</h3>
-            <div className="call-confirm-actions">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={confirmAndCall}
-              >
-                OK
-              </button>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => setShowCallConfirm(false)}
-              >
-                Cancel
-              </button>
+            <div
+              className="call-confirm-dialog"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="call-confirm-actions">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={confirmAndCall}
+                  id="call-confirm-title"
+                >
+                  +1 (704) 219-1589
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowCallConfirm(false)}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </div>
     </CallConfirmContext.Provider>
   )

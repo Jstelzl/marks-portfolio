@@ -1,15 +1,9 @@
 /**
- * Heuristic: returns true if the browser/OS likely shows a native confirmation
- * before initiating a tel: call, so we should skip our custom modal.
- *
- * There is no reliable API to detect this. Known behavior:
- * - iOS: Shows "Call [number]?" dialog
- * - Android: Typically opens dialer with confirmation
- * - Desktop: Varies (Chrome/Edge may show app picker; Safari launches FaceTime)
- *
- * We skip our popup on mobile (iOS/Android) where native confirmation is common.
+ * Returns true if we should skip our custom confirmation and go straight to tel:.
+ * We show our custom bar on both mobile and desktop (user prefers it).
+ * Skip only when we're confident native provides a good experience - currently
+ * we always show our bar to ensure consistent UX.
  */
 export function shouldSkipCallConfirmation() {
-  const ua = typeof navigator !== 'undefined' ? navigator.userAgent || '' : ''
-  return /iPhone|iPad|iPod|Android/i.test(ua)
+  return false
 }

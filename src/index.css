@@ -341,34 +341,84 @@ a:focus-visible,
   }
 }
 
-/* Call confirmation modal - custom modal instead of window.confirm */
-.call-confirm-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+/* Call confirmation - bar style (same as mobile), top on desktop, bottom on mobile */
+.call-confirm-overlay,
+div.call-confirm-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: transparent !important;
+  pointer-events: none;
+  display: flex !important;
+  justify-content: center !important;
+  z-index: 1000 !important;
 }
 
-.call-confirm-dialog {
-  background: #fff;
-  padding: 1.5rem 2rem;
-  border-radius: 4px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  max-width: 90%;
+/* Desktop: bar at bottom */
+.call-confirm-overlay,
+div.call-confirm-overlay {
+  align-items: flex-end !important;
 }
 
-.call-confirm-dialog h3 {
-  margin: 0 0 1.25rem;
-  font-size: 1.125rem;
+.call-confirm-dialog,
+div.call-confirm-dialog {
+  pointer-events: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: var(--call-confirm-footer-height, auto) !important;
+  padding: 0.75rem 1rem !important;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0)) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  background: #eeeeee !important;
 }
 
-.call-confirm-actions {
-  display: flex;
-  gap: 0.75rem;
-  justify-content: flex-end;
+.call-confirm-actions,
+div.call-confirm-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  width: 90% !important;
+  align-self: center !important;
+}
+
+/* Desktop: gray background (matches footer), 50% width */
+@media (min-width: 768px) {
+  .call-confirm-dialog,
+  div.call-confirm-dialog {
+    background: #eeeeee !important;
+  }
+
+  .call-confirm-actions,
+  div.call-confirm-actions {
+    width: 45% !important;
+  }
+}
+
+.call-confirm-actions .btn,
+.call-confirm-actions button.btn {
+  width: 100% !important;
+  padding: 0.875rem 1rem !important;
+  font-size: 1rem !important;
+  text-align: center !important;
+  border-radius: 9999px !important;
+}
+
+/* Mobile: bar at bottom */
+@media (max-width: 767px) {
+  .call-confirm-overlay,
+  div.call-confirm-overlay {
+    align-items: flex-end !important;
+  }
+
+  .call-confirm-dialog,
+  div.call-confirm-dialog {
+    padding-top: 0.75rem !important;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0)) !important;
+  }
 }
 
 
@@ -416,13 +466,37 @@ a:focus-visible,
 }
 
 .portfolio-grid__view-all .btn {
+  position: relative;
   border: none;
   background: none;
   box-shadow: none;
-  padding-left: 1rem;
-  border-left: 3px solid transparent;
+  padding: 0.5rem 1rem;
   color: #1e5a8a;
-  transition: color 200ms ease-out, border-color 200ms ease-out;
+  transition: color 200ms ease-out;
+}
+
+.portfolio-grid__view-all .btn::before,
+.portfolio-grid__view-all .btn::after {
+  content: '';
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-color: transparent;
+  transition: border-color 200ms ease-out;
+}
+
+.portfolio-grid__view-all .btn::before {
+  top: 0;
+  left: 0;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+}
+
+.portfolio-grid__view-all .btn::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid transparent;
+  border-right: 2px solid transparent;
 }
 
 .portfolio-grid__view-all .btn:focus,
@@ -431,7 +505,29 @@ a:focus-visible,
   background: none;
   box-shadow: none;
   color: #1e5a8a;
-  border-left-color: #1e5a8a;
+}
+
+.portfolio-grid__view-all .btn:focus::before,
+.portfolio-grid__view-all .btn:hover::before,
+.portfolio-grid__view-all .btn:active::before,
+.portfolio-grid__view-all .btn:focus::after,
+.portfolio-grid__view-all .btn:hover::after,
+.portfolio-grid__view-all .btn:active::after {
+  border-color: #1e5a8a;
+}
+
+/* Desktop: View All Projects button 1.5x size */
+@media (min-width: 768px) {
+  .portfolio-grid__view-all .btn {
+    font-size: 1.25rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .portfolio-grid__view-all .btn::before,
+  .portfolio-grid__view-all .btn::after {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
 }
 
 .portfolio-grid__card {
@@ -871,6 +967,37 @@ a:focus-visible,
   }
 }
 
+/* Contracting Services: light gray background, full-bleed to edges */
+.contracting-services {
+  background-color: #eeeeee;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 2.5rem calc(50vw - 50% + 1rem);
+}
+
+.contracting-services__header {
+  text-align: left;
+  align-self: flex-start;
+}
+
+.contracting-services__header h2 {
+  margin-bottom: 0.5rem;
+  color: #333333;
+}
+
+.contracting-services__header p {
+  margin: 0 0 1.75rem;
+  color: #333333;
+}
+
+.contracting-services .icon-box .icon-box__title {
+  color: #333333;
+}
+
+.contracting-services .icon-box .icon-box__subtitle {
+  color: #555555;
+}
+
 /* Icon box spacing when stacked on mobile */
 .content-area .entry-content .icon-box {
   margin-bottom: 1rem;
@@ -997,6 +1124,24 @@ a:focus-visible,
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+/* Desktop: 2x2 grid for stats, 50% size */
+@media (min-width: 768px) {
+  .quote-cta-boxes__stats-box .number-counters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    width: 50%;
+    max-width: 50%;
+    aspect-ratio: 1;
+  }
+
+  .quote-cta-boxes__stats-box .number-counter {
+    flex: none;
+    min-width: 0;
+  }
 }
 
 .quote-cta-boxes__button-box {

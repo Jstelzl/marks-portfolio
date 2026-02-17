@@ -29,7 +29,7 @@ function Home() {
               aria-label="Call +1 (704) 219-1589"
             >
               <i className="fa  fa-phone  fa-3x" aria-hidden="true"></i>
-              <span className="contact-us-today__label">Call</span>
+              <span className="contact-us-today__label">+1 (704) 219-1589</span>
             </button>
           </div>
           <div className="col-xs-12  col-md-4">
@@ -97,8 +97,8 @@ function Home() {
         </div>
       </section>
 
-      <section className="row">
-        <div className="col-xs-12 text-xs-center">
+      <section className="row contracting-services">
+        <div className="col-xs-12 contracting-services__header">
           <h2>Contracting Services</h2>
           <p>
             Reliable construction services built around clear scope, pricing,
