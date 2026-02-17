@@ -76,8 +76,8 @@ function ProjectDetail() {
 
         <div className="row">
           <div className="col-xs-12">
-            <NavLink className="btn btn-primary" to="/portfolio">
-              Back to Portfolio
+            <NavLink className="btn btn-primary" to="/projects">
+              Back to Projects
             </NavLink>
           </div>
         </div>

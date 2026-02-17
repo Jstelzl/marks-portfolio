@@ -2,6 +2,33 @@ body {
   margin: 0;
 }
 
+/* Remove focus outline (yellow box) on all interactive elements - rely on color change on hover/active instead */
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible,
+.btn:focus,
+.btn:focus-visible,
+.nav-link:focus,
+.nav-link:focus-visible,
+.contact-us-today__option:focus,
+.contact-us-today__option:focus-visible,
+.footer__phone-link:focus,
+.footer__phone-link:focus-visible,
+.footer-top a:focus,
+.footer-top a:focus-visible,
+.portfolio-grid__card:focus,
+.portfolio-grid__card:focus-visible,
+.portfolio-grid__card-block:focus,
+.portfolio-grid__card-block:focus-visible,
+.portfolio-grid__nav-link:focus,
+.portfolio-grid__nav-link:focus-visible,
+.call-confirm-actions .btn:focus,
+.call-confirm-actions .btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 #root {
   min-height: 100vh;
 }
@@ -46,8 +73,8 @@ body {
 }
 
 .header__logo img {
-  max-width: 300px;
-  max-height: 100px;
+  max-width: 345px;
+  max-height: 115px;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -61,15 +88,15 @@ body {
   }
 
   .header__logo img {
-    max-width: 230px;
-    max-height: 78px;
+    max-width: 265px;
+    max-height: 90px;
   }
 }
 
 @media (max-width: 575px) {
   .header__logo img {
-    max-width: 190px;
-    max-height: 64px;
+    max-width: 219px;
+    max-height: 74px;
   }
 }
 
@@ -116,6 +143,22 @@ body {
   .menu-item--home + .menu-item {
     margin-left: 1.5rem;
   }
+
+  /* Gray divider between home and Services when hovering over home */
+  .main-navigation > .menu-item--home {
+    position: relative;
+  }
+
+  .main-navigation > .menu-item--home:hover::after {
+    content: '';
+    position: absolute;
+    right: -0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 1.25rem;
+    background-color: #333333;
+  }
 }
 
 /* No text-decoration underline on nav links - yellow border indicates active/hover */
@@ -150,9 +193,11 @@ body {
   .mobile-only-quote {
     display: none !important;
   }
+}
 
-  /* hide the nav close button on desktop (keeps it only on mobile) */
-  .header__nav-close {
+/* Hide Free Estimate from nav on mobile; Contact remains */
+@media (max-width: 991px) {
+  .mobile-only-quote {
     display: none !important;
   }
 }
@@ -163,6 +208,40 @@ body {
   justify-content: center;
   padding: 0.75rem 0.9rem;
   flex-shrink: 0;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  position: relative;
+  z-index: 25;
+}
+
+.header__navbar-toggler.btn:hover,
+.header__navbar-toggler.btn:focus,
+.header__navbar-toggler.btn:active,
+.header__navbar-toggler.btn:focus-visible {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.header__navbar-toggler .hamburger,
+.header__navbar-toggler:hover .hamburger,
+.header__navbar-toggler:focus .hamburger {
+  color: #000 !important;
+  padding-right: 0 !important;
+  font-size: 30px;
+}
+
+@media (max-width: 991px) {
+  .header__navbar-toggler.is-open {
+    position: fixed;
+    top: 1.25rem;
+    right: 1rem;
+    z-index: 30;
+  }
 }
 
 @media (min-width: 992px) {
@@ -171,13 +250,14 @@ body {
   }
 }
 
-.header__navbar-toggler .hamburger {
-  padding-right: 0 !important;
-}
 
 @media (max-width: 991px) {
   .nav-open {
     overflow: hidden;
+  }
+
+  .header__inner {
+    position: relative;
   }
 
   .header__navigation {
@@ -199,18 +279,6 @@ body {
 
   .header__navigation.in .menu-item--quote {
     display: block;
-  }
-
-  .header__nav-close {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.5rem;
-    border: 0;
-    background: transparent;
-    font-size: 2rem;
-    line-height: 1;
-    cursor: pointer;
-    color: #000000;
   }
 
   .main-navigation {
@@ -271,6 +339,36 @@ body {
     background: rgba(0, 0, 0, 0.6);
     z-index: 10;
   }
+}
+
+/* Call confirmation modal - custom modal instead of window.confirm */
+.call-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.call-confirm-dialog {
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 90%;
+}
+
+.call-confirm-dialog h3 {
+  margin: 0 0 1.25rem;
+  font-size: 1.125rem;
+}
+
+.call-confirm-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
 }
 
 
@@ -350,7 +448,7 @@ body {
 }
 
 /* Fixed aspect ratio image - same height for all cards in row */
-.portfolio-grid__card > a:first-child {
+.portfolio-grid__card-image {
   position: relative;
   display: block;
   flex-shrink: 0;
@@ -360,7 +458,7 @@ body {
   overflow: hidden;
 }
 
-.portfolio-grid__card > a:first-child img,
+.portfolio-grid__card-image img,
 .portfolio-grid__card-img {
   position: absolute;
   top: 0;
@@ -411,6 +509,12 @@ body {
   text-decoration: none;
 }
 
+/* Arrow in card corner - blue on hover to match View button */
+.portfolio-grid__card:focus .portfolio-grid__card-block::after,
+.portfolio-grid__card:hover .portfolio-grid__card-block::after {
+  border-bottom-color: #1e5a8a;
+}
+
 /* Portfolio filter buttons - reset to match nav-link style */
 .portfolio-grid__nav-link.btn-reset,
 .portfolio-grid__nav button.portfolio-grid__nav-link {
@@ -420,18 +524,83 @@ body {
   font: inherit;
 }
 
-/* Remove focus outline (yellow square), yellow underline on hover only */
+/* Projects filter nav - flush items with no gaps (prevents hover flash between items) */
+.portfolio-grid__nav-item {
+  margin-right: 0 !important;
+}
+
+.portfolio-grid__nav button.portfolio-grid__nav-link {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  /* Reserve space for bar - prevents layout shift when hover adds is-hovered */
+  border-bottom: 3px solid transparent;
+}
+
+@media (min-width: 992px) {
+  .portfolio-grid__nav button.portfolio-grid__nav-link {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Remove focus outline (yellow square) */
 .portfolio-grid__nav button.portfolio-grid__nav-link:focus {
   outline: none;
   box-shadow: none;
 }
 
-.portfolio-grid__nav button.portfolio-grid__nav-link:hover {
-  border-bottom: 3px solid #edac15;
-}
+/* Yellow underline bar for all nav items (active + hover) */
+@media (min-width: 992px) {
+  .portfolio-grid__header {
+    border-bottom: none;
+  }
 
-.portfolio-grid__nav-item.is-active button.portfolio-grid__nav-link {
-  border-bottom: 3px solid #edac15;
+  .portfolio-grid__header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: #eeeeee;
+    z-index: 0;
+  }
+
+  .portfolio-grid__nav {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* All nav items get the yellow bar pseudo-element */
+  .portfolio-grid__nav-item {
+    position: relative;
+  }
+
+  .portfolio-grid__nav-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    height: 3px;
+    background-color: #edac15;
+    z-index: 2;
+    visibility: hidden;
+    pointer-events: none; /* events pass through to li, prevents hover glitch */
+    transition: none; /* prevent theme's transition: all from affecting bar */
+  }
+
+  /* Show bar for active or hovered item - override theme's bottom: -1px */
+  .portfolio-grid__nav-item.is-active::after,
+  .portfolio-grid__nav-item.is-hovered::after {
+    visibility: visible;
+    bottom: 4px;
+  }
+
+  /* Hide active bar when hovering another nav (same as header) */
+  .portfolio-grid__nav.portfolio-grid__nav-has-hover .portfolio-grid__nav-item.is-active:not(.is-hovered)::after {
+    visibility: hidden;
+  }
 }
 
 /* View links on project cards - no focus outline (yellow square) */
@@ -517,8 +686,8 @@ body {
   background-color: #f2f2f2;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: 2rem calc(50vw - 50% + 0.9375rem);
-  margin-bottom: 2rem;
+  padding: 2.5rem calc(50vw - 50% + 0.9375rem);
+  margin-bottom: 2.5rem;
   border-bottom: 1px solid #eeeeee;
   box-sizing: border-box;
 }
@@ -531,13 +700,13 @@ body {
 
 @media (min-width: 768px) {
   .contact-us-today {
-    padding: 2.5rem 0;
-    margin-bottom: 2.25rem;
+    padding: 3rem 0;
+    margin-bottom: 3rem;
   }
 
   .contact-us-today__title {
     font-size: 1.75rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.25rem;
   }
 }
 
@@ -545,11 +714,19 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   padding: 1.25rem;
   text-decoration: none;
   color: #333333;
   transition: color 200ms ease-out;
   border-radius: 4px;
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .contact-us-today__option:hover,
@@ -573,9 +750,15 @@ body {
 
 @media (min-width: 768px) {
   .contact-us-today {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
-    margin-bottom: 2.25rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Yellow vertical bar between contact buttons */
+  .contact-us-today .row > [class*="col-"]:nth-child(2),
+  .contact-us-today .row > [class*="col-"]:nth-child(3) {
+    border-left: 2px solid #edac15;
   }
 }
 
@@ -595,7 +778,7 @@ body {
   max-width: 42rem;
   margin-left: auto;
   margin-right: auto;
-  padding: 2rem 0;
+  padding: 2.5rem 0;
 }
 
 .bio-section__title {
@@ -606,7 +789,7 @@ body {
 }
 
 .bio-section__text {
-  margin: 0 0 1.5rem;
+  margin: 0 0 2rem;
   line-height: 1.6;
   color: #333333;
 }
@@ -631,7 +814,7 @@ body {
 
 @media (min-width: 768px) {
   .bio-section {
-    padding: 2.5rem 0;
+    padding: 3rem 0;
   }
 
   .bio-section__title {
@@ -640,13 +823,13 @@ body {
   }
 
   .bio-section__text {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
   }
 }
 
-/* Content spacing - responsive, less on mobile */
+/* Content spacing - responsive, more vertical space between sections */
 .content-area .entry-content > section {
-  margin-bottom: 1.75rem;
+  margin-bottom: 2.5rem;
 }
 
 .content-area .entry-content > section:last-child {
@@ -655,36 +838,36 @@ body {
 
 @media (min-width: 768px) {
   .content-area .entry-content > section {
-    margin-bottom: 2.25rem;
+    margin-bottom: 3.25rem;
   }
 }
 
 @media (min-width: 992px) {
   .content-area .entry-content > section {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
   }
 }
 
 /* Section heading spacing */
 .content-area .entry-content h2 {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 @media (min-width: 768px) {
   .content-area .entry-content h2 {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
   }
 }
 
 /* Spacing after intro text in sections */
 .content-area .entry-content .text-xs-center {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 @media (min-width: 768px) {
   .content-area .entry-content .text-xs-center {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
 }
 
@@ -701,12 +884,12 @@ body {
 
 /* Portfolio grid - space between heading and cards */
 .portfolio-grid > h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.75rem;
 }
 
 @media (min-width: 768px) {
   .portfolio-grid > h2 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
 }
 
@@ -728,7 +911,7 @@ body {
 
 /* Row columns - vertical gap when stacked */
 .content-area .entry-content .row > [class*="col-"] {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
 }
 
 @media (min-width: 768px) {
@@ -760,6 +943,637 @@ body {
   .content-area .entry-content .call-to-action {
     margin-top: 1rem;
     padding-top: 2rem;
+  }
+}
+
+/* Two-box section: stats left, Get a Free Estimate button right - flush with screen edges */
+.quote-cta-boxes {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.quote-cta-boxes__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .quote-cta-boxes__inner {
+    flex-direction: row;
+  }
+}
+
+.quote-cta-boxes__stats-box {
+  flex: 1 1 0;
+  min-width: 0;
+  background-color: #ffffff;
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quote-cta-boxes__stats-box .number-counters {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+}
+
+.quote-cta-boxes__stats-box .number-counter {
+  flex: 1 1 6rem;
+  min-width: 6rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.quote-cta-boxes__button-box {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background-color: #ffffff;
+}
+
+.quote-cta-boxes__button {
+  display: inline-block;
+  padding: 0.625rem 1.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  color: #ffffff;
+  background: #1e5a8a;
+  background-image: none;
+  border: 2px solid #1e5a8a;
+  border-radius: 0.125rem;
+  transition: background 200ms ease-out, border-color 200ms ease-out, color 200ms ease-out;
+}
+
+.quote-cta-boxes__button:hover,
+.quote-cta-boxes__button:focus {
+  color: #ffffff;
+  background: #164a6e;
+  background-image: none;
+  border-color: #164a6e;
+}
+
+/* Space between last content (e.g. quote-cta-boxes) and footer */
+.footer {
+  padding-top: 2.5rem;
+}
+
+/* Vertically center text columns in footer (not logo) */
+.footer-top .row > [class*="col-"]:not(.footer-top__logo) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Footer contact links - keep gray color */
+.footer-top .row > [class*="col-"]:not(.footer-top__logo) a {
+  color: #999999;
+  text-decoration: none;
+}
+
+.footer-top .row > [class*="col-"]:not(.footer-top__logo) a:hover,
+.footer-top .row > [class*="col-"]:not(.footer-top__logo) a:focus {
+  color: #edac15;
+  text-decoration: underline;
+}
+
+.footer-top .row > [class*="col-"]:not(.footer-top__logo) a.footer__email-link:hover,
+.footer-top .row > [class*="col-"]:not(.footer-top__logo) a.footer__email-link:focus {
+  text-decoration: underline;
+  color: #edac15;
+}
+
+/* Footer phone - styled like link, uses custom confirm modal */
+.footer__phone-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: #999999;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.footer__phone-link:hover,
+.footer__phone-link:focus {
+  color: #edac15;
+  text-decoration: underline;
+}
+
+.footer__phone-link .fa {
+  margin-right: 0.5rem;
+}
+
+.footer__email-link {
+  display: inline-block;
+  padding: 0.25rem 0;
+}
+
+.footer-top .row > [class*="col-"]:not(.footer-top__logo) a .fa {
+  margin-right: 0.5rem;
+}
+
+.footer-top__logo {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding-top: 0;
+}
+
+@media (min-width: 768px) {
+  .footer-top__logo {
+    margin-bottom: 0;
+  }
+}
+
+.footer__logo-img {
+  display: block;
+  max-height: 9rem;
+  width: auto;
+  margin-top: -2rem;
+  vertical-align: top;
+}
+
+@media (min-width: 768px) {
+  .footer-top__row {
+    align-items: flex-start;
+  }
+
+  .footer__logo-img {
+    max-height: 11rem;
+    margin-top: -2rem;
+  }
+}
+
+/* ===== Mobile footer: 4x4 grid with logo in top-left ===== */
+@media (max-width: 991px) {
+  .footer-top__row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, auto);
+    column-gap: 1rem;
+    row-gap: 2rem;
+    margin-left: 0;
+    margin-right: 0;
+    justify-items: center;
+    align-items: start;
+  }
+
+  .footer-top__row > [class*="col-"] {
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-top__cell--contact,
+  .footer-top__cell--service-area,
+  .footer-top__cell--specialties {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    min-height: 0;
+  }
+
+  .footer-top__cell--contact h4,
+  .footer-top__cell--service-area h4,
+  .footer-top__cell--specialties h4 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-top__cell--contact p,
+  .footer-top__cell--service-area p,
+  .footer-top__cell--specialties p {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-top__cell--contact p:last-child,
+  .footer-top__cell--service-area p:last-child,
+  .footer-top__cell--specialties p:last-child {
+    margin-bottom: 0;
+  }
+
+  .footer-top__cell--logo {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    margin-bottom: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    justify-self: start;
+  }
+
+  .footer-top__cell--contact {
+    grid-column: 3 / 5;
+    grid-row: 1 / 3;
+    text-align: left;
+  }
+
+  .footer-top__cell--service-area {
+    grid-column: 1 / 3;
+    grid-row: 3 / 5;
+    text-align: left;
+  }
+
+  .footer-top__cell--specialties {
+    grid-column: 3 / 5;
+    grid-row: 3 / 5;
+    text-align: left;
+  }
+
+  /* Larger footer text on mobile */
+  .footer-top,
+  .footer-top .row > [class*="col-"],
+  .footer-top p,
+  .footer-top a,
+  .footer-top .footer__phone-link,
+  .footer-top .footer__email-link {
+    font-size: 1.3rem !important;
+  }
+
+  .footer-top h4 {
+    font-size: 1.3rem !important;
+  }
+}
+
+/* ===== Mobile: 4x4 grid layouts + larger text for readability ===== */
+@media (max-width: 767px) {
+  /* Body text size on mobile */
+  body,
+  .content-area .entry-content,
+  .content-area .entry-content p,
+  .content-area .entry-content span {
+    font-size: 18px !important;
+  }
+
+  /* More vertical space between all home page elements */
+  .content-area .entry-content > section {
+    margin-bottom: 3.5rem !important;
+  }
+
+  .content-area .entry-content > section:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .content-area .entry-content h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .content-area .entry-content .text-xs-center {
+    margin-bottom: 2rem;
+  }
+
+  .content-area .entry-content .icon-box {
+    margin-bottom: 1.5rem;
+  }
+
+  .portfolio-grid__cards {
+    gap: 1.5rem;
+  }
+
+  .portfolio-grid--recent .portfolio-grid__card {
+    margin: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .portfolio-grid__view-all {
+    margin-top: 1.5rem;
+  }
+
+  .portfolio-grid > h2 {
+    margin-top: 0.5rem;
+  }
+
+  .content-area .entry-content > section.row {
+    padding-top: 0.5rem;
+  }
+
+  .contact-us-today .row > [class*="col-"] {
+    margin-bottom: 1.5rem;
+  }
+
+  .bio-section__text {
+    margin-bottom: 1.5rem;
+  }
+
+  .bio-section {
+    padding: 2rem 0;
+  }
+
+  .contact-us-today {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .quote-cta-boxes {
+    margin-top: 3.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  /* Larger logo in header, shifted right */
+  .header__logo img {
+    max-width: 299px;
+    max-height: 101px;
+  }
+
+  .header__brand {
+    margin-left: 1.5rem;
+  }
+
+  /* Center all content on mobile */
+  .contact-us-today__title {
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  .contact-us-today .row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-us-today__option {
+    text-align: center;
+  }
+
+  /* Remove focus outline (yellow box) on mobile only - icons still turn yellow on hover/active */
+  .contact-us-today__option:focus,
+  .contact-us-today__option:active,
+  .contact-us-today__option:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    color: #edac15;
+  }
+
+  .call-confirm-actions .btn:focus,
+  .call-confirm-actions .btn:active,
+  .call-confirm-actions .btn:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .footer__phone-link:focus,
+  .footer__phone-link:active,
+  .footer__phone-link:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .bio-section {
+    text-align: center;
+  }
+
+  .bio-section__button {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5rem;
+  }
+
+  .portfolio-grid > h2,
+  .portfolio-grid__view-all {
+    text-align: center;
+  }
+
+  .portfolio-grid__view-all .btn {
+    display: inline-block;
+    font-size: 1.25rem;
+    padding: 0.625rem 1.5rem;
+  }
+
+  .content-area .entry-content .text-xs-center,
+  .content-area .entry-content .text-xs-center h2,
+  .content-area .entry-content .text-xs-center p {
+    text-align: center;
+  }
+
+  /* Services section - center all content */
+  .content-area .entry-content > section.row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content-area .entry-content .icon-box {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .content-area .entry-content .icon-box .fa {
+    float: none;
+    margin-right: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .content-area .entry-content .icon-box .icon-box__text {
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .content-area .entry-content .icon-box .icon-box__title,
+  .content-area .entry-content .icon-box .icon-box__subtitle {
+    text-align: center;
+  }
+
+  .quote-cta-boxes__inner {
+    align-items: center;
+    text-align: center;
+  }
+
+  .quote-cta-boxes__stats-box {
+    text-align: center;
+  }
+
+  .quote-cta-boxes__stats-box .number-counters {
+    justify-items: center;
+  }
+
+  .quote-cta-boxes__stats-box .number-counter {
+    text-align: center;
+  }
+
+  .quote-cta-boxes__button-box {
+    justify-content: center;
+  }
+
+  .quote-cta-boxes__button {
+    font-size: 1.1rem;
+    padding: 0.5rem 1.4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 12px rgba(30, 90, 138, 0.35);
+  }
+
+  /* Project cards - hide image by default; show on .is-expanded (click to toggle, excluding View button) */
+  .portfolio-grid__card-block {
+    border-top: none;
+  }
+
+  .portfolio-grid__card.is-expanded .portfolio-grid__card-block {
+    border-top: 1px solid #eeeeee;
+    z-index: 0;
+  }
+
+  /* When expanded: card-block doesn't capture clicks so image receives them; View button stays clickable */
+  .portfolio-grid__card.is-expanded .portfolio-grid__card-block {
+    pointer-events: none;
+  }
+
+  .portfolio-grid__card.is-expanded .portfolio-grid__card-link {
+    pointer-events: auto;
+  }
+
+  .portfolio-grid__card-image {
+    height: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: height 0.25s ease, padding 0.25s ease, opacity 0.25s ease;
+    cursor: pointer;
+    pointer-events: none;
+  }
+
+  .portfolio-grid__card.is-expanded .portfolio-grid__card-image {
+    height: 0;
+    padding-bottom: 75%;
+    opacity: 1;
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+    touch-action: manipulation;
+  }
+
+  .portfolio-grid__card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .portfolio-grid__card.is-expanded {
+    transform: scale(1.03);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+    z-index: 1;
+    position: relative;
+  }
+
+  /* No focus outline on card-block - card emphasis provides visual feedback */
+  .portfolio-grid__card-block:focus {
+    outline: none;
+  }
+
+  /* Larger card text on mobile for visibility */
+  .portfolio-grid__card-title {
+    font-size: 1.5rem;
+  }
+
+  .portfolio-grid__card-text {
+    font-size: 1.125rem;
+  }
+
+  .portfolio-grid__card-link {
+    font-size: 1rem;
+    padding: 0.375rem 0.875rem;
+  }
+
+  /* Bio section - larger text and button on mobile */
+  .bio-section__title {
+    font-size: 2rem;
+  }
+
+  .bio-section__text {
+    font-size: 1.25rem;
+  }
+
+  .bio-section__button {
+    font-size: 1.1rem;
+    padding: 0.5rem 1.4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 12px rgba(30, 90, 138, 0.35);
+  }
+
+  /* Contracting services - larger subtitle */
+  .content-area .entry-content .icon-box .icon-box__subtitle {
+    font-size: 1rem;
+  }
+
+  .quote-cta-boxes__stats-box .number-counters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2rem;
+    max-width: none;
+    width: 100%;
+    aspect-ratio: 1;
+  }
+
+  .quote-cta-boxes__stats-box .number-counter--projects {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  .quote-cta-boxes__stats-box .number-counter--clients {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  .quote-cta-boxes__stats-box .number-counter--years {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+
+  .quote-cta-boxes__stats-box .number-counter--inspections-passed {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+
+  .quote-cta-boxes__stats-box .number-counter {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    box-sizing: border-box;
+  }
+
+  .quote-cta-boxes__stats-box .number-counter__number {
+    min-width: 3ch;
+    text-align: center;
+  }
+
+  .quote-cta-boxes__stats-box .number-counter__title {
+    text-align: center;
+    word-break: break-word;
   }
 }
 

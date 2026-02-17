@@ -1,22 +1,36 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import {
   counters,
   portfolioItems,
   services,
-  testimonials,
 } from '../data/siteData'
+import { useCallConfirm } from '../context/CallConfirmContext'
 
 function Home() {
+  const [expandedCard, setExpandedCard] = useState(null)
+  const { initiateCall } = useCallConfirm() || {}
+
+  const handleCardClick = (e, slug) => {
+    if (e.target.closest('.portfolio-grid__card-link')) return
+    setExpandedCard((prev) => (prev === slug ? null : slug))
+  }
+
   return (
     <>
       <section className="contact-us-today">
         <h2 className="contact-us-today__title">Contact Us Today</h2>
         <div className="row">
           <div className="col-xs-12  col-md-4">
-            <NavLink to="/contact" className="contact-us-today__option">
+            <button
+              type="button"
+              className="contact-us-today__option"
+              onClick={() => initiateCall?.()}
+              aria-label="Call +1 (704) 219-1589"
+            >
               <i className="fa  fa-phone  fa-3x" aria-hidden="true"></i>
               <span className="contact-us-today__label">Call</span>
-            </NavLink>
+            </button>
           </div>
           <div className="col-xs-12  col-md-4">
             <NavLink to="/contact" className="contact-us-today__option">
@@ -42,7 +56,7 @@ function Home() {
           reliability to every project.
         </p>
         <NavLink className="btn  btn-primary  bio-section__button" to="/contact">
-          Get a free project estimate today
+          Get a free estimate today
         </NavLink>
       </section>
 
@@ -50,20 +64,25 @@ function Home() {
         <h2>Recent Projects</h2>
         <div className="portfolio-grid__cards">
           {portfolioItems.slice(0, 3).map((item) => (
-            <div className="portfolio-grid__card" key={item.slug}>
-              <NavLink to={`/portfolio/${item.slug}`}>
+            <div
+              className={`portfolio-grid__card${expandedCard === item.slug ? ' is-expanded' : ''}`}
+              key={item.slug}
+              onClick={(e) => handleCardClick(e, item.slug)}
+            >
+              <div className="portfolio-grid__card-image">
                 <img
                   className="portfolio-grid__card-img"
                   src={item.image}
                   alt={item.title}
+                  draggable={false}
                 />
-              </NavLink>
-              <div className="portfolio-grid__card-block">
+              </div>
+              <div className="portfolio-grid__card-block" tabIndex={0}>
                 <h5 className="portfolio-grid__card-title">{item.title}</h5>
                 <p className="portfolio-grid__card-text">{item.subtitle}</p>
                 <NavLink
                   className="portfolio-grid__card-link btn"
-                  to={`/portfolio/${item.slug}`}
+                  to={`/projects/${item.slug}`}
                 >
                   View
                 </NavLink>
@@ -72,7 +91,7 @@ function Home() {
           ))}
         </div>
         <div className="portfolio-grid__view-all">
-          <NavLink className="btn  btn-secondary" to="/portfolio">
+          <NavLink className="btn  btn-secondary" to="/projects">
             View All Projects
           </NavLink>
         </div>
@@ -99,73 +118,32 @@ function Home() {
         ))}
       </section>
 
-      <section className="row">
-        <div className="col-xs-12  col-lg-7">
-          <div className="testimonial">
-            <h3 className="widget-title">Client Feedback</h3>
-            <div className="carousel slide">
-              <div className="carousel-inner" role="listbox">
-                <div className="item active">
-                  <div className="row">
-                    {testimonials.map((testimonial) => (
-                      <div
-                        className="col-xs-12  col-sm-6"
-                        key={testimonial.author}
-                      >
-                        <blockquote>
-                          <p className="testimonial__quote">
-                            {testimonial.quote}
-                          </p>
-                          <cite className="testimonial__author">
-                            {testimonial.author}
-                          </cite>
-                          <div className="testimonial__author-description">
-                            {testimonial.role}
-                          </div>
-                          <div className="testimonial__rating">
-                            {Array.from({
-                              length: testimonial.rating,
-                            }).map((_, index) => (
-                              <i className="fa  fa-star" key={index}></i>
-                            ))}
-                          </div>
-                        </blockquote>
-                      </div>
-                    ))}
+      <section className="quote-cta-boxes">
+        <div className="quote-cta-boxes__inner">
+          <div className="quote-cta-boxes__stats-box">
+            <div className="number-counters" data-speed="1400">
+              {counters.map((counter) => (
+                <div
+                  className={`number-counter number-counter--${counter.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  key={counter.title}
+                >
+                  <i className={`number-counter__icon  fa  ${counter.icon}`}></i>
+                  <div
+                    className="number-counter__number  js-number"
+                    data-to={counter.number}
+                  >
+                    {counter.number}
                   </div>
+                  <div className="number-counter__title">{counter.title}</div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
-        <div className="col-xs-12  col-lg-5">
-          <div className="number-counters" data-speed="1400">
-            {counters.map((counter) => (
-              <div className="number-counter" key={counter.title}>
-                <i className={`number-counter__icon  fa  ${counter.icon}`}></i>
-                <div
-                  className="number-counter__number  js-number"
-                  data-to={counter.number}
-                >
-                  {counter.number}
-                </div>
-                <div className="number-counter__title">{counter.title}</div>
-              </div>
-            ))}
+          <div className="quote-cta-boxes__button-box">
+            <NavLink className="btn  quote-cta-boxes__button" to="/contact">
+              Get a Free Estimate
+            </NavLink>
           </div>
-        </div>
-      </section>
-
-      <section className="call-to-action  clearfix">
-        <div className="call-to-action__text">
-        </div>
-        <div className="call-to-action__button">
-          <NavLink className="btn  btn-primary" to="/contact">
-            Get a Quote
-          </NavLink>
-          <NavLink className="btn  btn-secondary" to="/portfolio">
-            View Projects
-          </NavLink>
         </div>
       </section>
     </>

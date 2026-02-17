@@ -16,9 +16,9 @@ function App() {
       <Routes>
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/projects" element={<Portfolio />} />
+        <Route path="/projects/:slug" element={<ProjectDetail />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/portfolio/:slug" element={<ProjectDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />

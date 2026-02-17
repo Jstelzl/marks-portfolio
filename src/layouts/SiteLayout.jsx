@@ -1,11 +1,33 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
+import { CallConfirmContext } from '../context/CallConfirmContext'
+import { shouldSkipCallConfirmation } from '../utils/callConfirm'
 
 const logoPath = '/assets/images/colored-logo.png'
+const PHONE_NUMBER = '+17042191589'
 
 function SiteLayout() {
   const [navOpen, setNavOpen] = useState(false)
   const [hoveredItem, setHoveredItem] = useState(null)
+  const [showCallConfirm, setShowCallConfirm] = useState(false)
+
+  const initiateCall = useCallback(() => {
+    if (shouldSkipCallConfirmation()) {
+      window.location.href = `tel:${PHONE_NUMBER}`
+    } else {
+      setShowCallConfirm(true)
+    }
+  }, [])
+
+  const confirmAndCall = useCallback(() => {
+    setShowCallConfirm(false)
+    window.location.href = `tel:${PHONE_NUMBER}`
+  }, [])
+
+  const callConfirmValue = useMemo(
+    () => ({ showCallConfirm, setShowCallConfirm, initiateCall, confirmAndCall }),
+    [showCallConfirm, initiateCall, confirmAndCall],
+  )
 
   useEffect(() => {
     document.body.classList.toggle('nav-open', navOpen)
@@ -20,27 +42,31 @@ function SiteLayout() {
     [],
   )
 
-  const handleNavLeave = () => {
-    setHoveredItem(null)
-  }
+  const handleNavLeave = useCallback(() => setHoveredItem(null), [])
 
-  const handleMobileClick = (key) => {
+  const handleMobileClick = useCallback((key) => {
     setHoveredItem(key)
     window.setTimeout(() => {
       setNavOpen(false)
       setHoveredItem(null)
     }, 150)
-  }
+  }, [])
 
-  const makeLinkHandlers = (key) => ({
-    onMouseEnter: () => setHoveredItem(key),
-    onMouseLeave: () => setHoveredItem(null),
-    onFocus: () => setHoveredItem(key),
-    onBlur: () => setHoveredItem(null),
+  const handleMouseEnter = useCallback((e) => {
+    const key = e.currentTarget?.dataset?.navKey
+    if (key) setHoveredItem(key)
+  }, [])
+
+  const makeLinkHandlers = useCallback((key) => ({
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleNavLeave,
+    onFocus: handleMouseEnter,
+    onBlur: handleNavLeave,
     onClick: () => handleMobileClick(key),
-  })
+  }), [handleMouseEnter, handleNavLeave, handleMobileClick])
 
   return (
+    <CallConfirmContext.Provider value={callConfirmValue}>
     <div className="boxed-container">
       <header className="site-header">
         <div className="top">
@@ -61,14 +87,14 @@ function SiteLayout() {
               </div>
 
               <button
-                className="btn  btn-primary  header__navbar-toggler  hidden-lg-up"
+                className={`btn  header__navbar-toggler  hidden-lg-up${navOpen ? ' is-open' : ''}`}
                 type="button"
                 onClick={() => setNavOpen((prev) => !prev)}
                 aria-expanded={navOpen}
                 aria-controls="structurepress-main-navigation"
-                aria-label="Toggle navigation"
+                aria-label={navOpen ? 'Close navigation' : 'Open navigation'}
               >
-                <i className="fa  fa-bars  hamburger"></i>
+                <i className={`fa  hamburger  ${navOpen ? 'fa-times' : 'fa-bars'}`}></i>
               </button>
 
               <nav
@@ -79,16 +105,6 @@ function SiteLayout() {
                 id="structurepress-main-navigation"
                 onMouseLeave={handleNavLeave}
               >
-                {navOpen ? (
-                  <button
-                    className="header__nav-close"
-                    type="button"
-                    onClick={() => setNavOpen(false)}
-                    aria-label="Close navigation"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                ) : null}
                 <ul
                   className="main-navigation  js-main-nav"
                   role="menubar"
@@ -112,6 +128,22 @@ function SiteLayout() {
                   <NavLink
                     className={({ isActive }) =>
                       `nav-link${
+                        hoveredItem === 'projects' ? ' is-hovered' : ''
+                      }${isActive ? ' is-active' : ''}`
+                    }
+                    data-nav-key="projects"
+                    to="/projects"
+                    style={hoveredItem === 'projects' ? navHoverStyle : undefined}
+                    {...makeLinkHandlers('projects')}
+                    end={false}
+                  >
+                    Projects
+                  </NavLink>
+                </li>
+                <li className="menu-item">
+                  <NavLink
+                    className={({ isActive }) =>
+                      `nav-link${
                         hoveredItem === 'services' ? ' is-hovered' : ''
                       }${isActive ? ' is-active' : ''}`
                     }
@@ -121,22 +153,6 @@ function SiteLayout() {
                     {...makeLinkHandlers('services')}
                   >
                     Services
-                  </NavLink>
-                </li>
-                <li className="menu-item">
-                  <NavLink
-                    className={({ isActive }) =>
-                      `nav-link${
-                        hoveredItem === 'portfolio' ? ' is-hovered' : ''
-                      }${isActive ? ' is-active' : ''}`
-                    }
-                    data-nav-key="portfolio"
-                    to="/portfolio"
-                    style={hoveredItem === 'portfolio' ? navHoverStyle : undefined}
-                    {...makeLinkHandlers('portfolio')}
-                    end={false}
-                  >
-                    Portfolio
                   </NavLink>
                 </li>
                 <li className="menu-item">
@@ -210,27 +226,83 @@ function SiteLayout() {
       <footer className="footer">
         <div className="footer-top">
           <div className="container">
-            <div className="row">
-              <div className="col-xs-12  col-md-4">
+            <div className="row  footer-top__row">
+              <div className="col-xs-12  col-md-3  footer-top__logo  footer-top__cell--logo">
+                <img
+                  src="/assets/images/transparent-logo.png"
+                  alt="Construction Contractor Portfolio"
+                  className="footer__logo-img  img-fluid"
+                />
+              </div>
+              <div className="col-xs-12  col-md-3  footer-top__cell--contact">
                 <h4>Contact</h4>
-                <p>hello@contractorco.com</p>
-                <p>+1 (555) 555-0123</p>
+                <p>
+                  <button
+                    type="button"
+                    className="footer__phone-link"
+                    onClick={initiateCall}
+                  >
+                    <i className="fa  fa-phone  fa-lg" aria-hidden="true"></i>
+                    {' '}+1 (704) 219-1589
+                  </button>
+                </p>
+                <p>
+                  <a href="mailto:mark@vartanianconstruction.com" className="footer__email-link" aria-label="Email mark@vartanianconstruction.com">
+                    <i className="fa  fa-envelope  fa-lg" aria-hidden="true"></i>
+                    {' '}Email
+                  </a>
+                </p>
               </div>
-              <div className="col-xs-12  col-md-4">
+              <div className="col-xs-12  col-md-3  footer-top__cell--service-area">
                 <h4>Service Area</h4>
-                <p>Greater Metro Area</p>
-                <p>Residential + light commercial</p>
+                <p><a href="#">Greater Metro Area</a></p>
+                <p><a href="#">Residential + light commercial</a></p>
               </div>
-              <div className="col-xs-12  col-md-4">
+              <div className="col-xs-12  col-md-3  footer-top__cell--specialties">
                 <h4>Specialties</h4>
-                <p>Remodels, additions, ADUs</p>
-                <p>Repairs and finish carpentry</p>
+                <p><a href="#">Remodels, additions, ADUs</a></p>
+                <p><a href="#">Repairs and finish carpentry</a></p>
               </div>
             </div>
           </div>
         </div>
       </footer>
+
+      {/* Call confirmation modal - custom instead of window.confirm for reliability */}
+      {showCallConfirm && (
+        <div
+          className="call-confirm-overlay"
+          onClick={() => setShowCallConfirm(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="call-confirm-title"
+        >
+          <div
+            className="call-confirm-dialog"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 id="call-confirm-title">Call +1 (704) 219-1589?</h3>
+            <div className="call-confirm-actions">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={confirmAndCall}
+              >
+                OK
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setShowCallConfirm(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+    </CallConfirmContext.Provider>
   )
 }
 

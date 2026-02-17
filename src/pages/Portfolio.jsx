@@ -7,6 +7,13 @@ import {
 
 function Portfolio() {
   const [activeFilter, setActiveFilter] = useState('all')
+  const [hoveredFilter, setHoveredFilter] = useState(null)
+  const [expandedCard, setExpandedCard] = useState(null)
+
+  const handleCardClick = (e, slug) => {
+    if (e.target.closest('.portfolio-grid__card-link')) return
+    setExpandedCard((prev) => (prev === slug ? null : slug))
+  }
 
   const filteredProjects =
     activeFilter === 'all'
@@ -18,13 +25,19 @@ function Portfolio() {
       <section className="portfolio-grid">
         <div className="portfolio-grid__header">
           <h2>Projects</h2>
-          <ul className="portfolio-grid__nav" role="tablist">
+          <ul
+            className={`portfolio-grid__nav${hoveredFilter ? ' portfolio-grid__nav-has-hover' : ''}`}
+            role="tablist"
+            onMouseLeave={() => setHoveredFilter(null)}
+          >
             {portfolioCategories.map((cat) => (
               <li
                 key={cat.slug}
                 className={`portfolio-grid__nav-item${
                   activeFilter === cat.slug ? ' is-active' : ''
-                }`}
+                }${hoveredFilter === cat.slug ? ' is-hovered' : ''}`}
+                onMouseEnter={() => setHoveredFilter(cat.slug)}
+                onMouseLeave={() => setHoveredFilter(null)}
               >
                 <button
                   type="button"
@@ -41,20 +54,25 @@ function Portfolio() {
         </div>
         <div className="portfolio-grid__cards">
           {filteredProjects.map((item) => (
-            <div className="portfolio-grid__card" key={item.slug}>
-              <NavLink to={`/portfolio/${item.slug}`}>
+            <div
+              className={`portfolio-grid__card${expandedCard === item.slug ? ' is-expanded' : ''}`}
+              key={item.slug}
+              onClick={(e) => handleCardClick(e, item.slug)}
+            >
+              <div className="portfolio-grid__card-image">
                 <img
                   className="portfolio-grid__card-img"
                   src={item.image}
                   alt={item.title}
+                  draggable={false}
                 />
-              </NavLink>
-              <div className="portfolio-grid__card-block">
+              </div>
+              <div className="portfolio-grid__card-block" tabIndex={0}>
                 <h5 className="portfolio-grid__card-title">{item.title}</h5>
                 <p className="portfolio-grid__card-text">{item.subtitle}</p>
                 <NavLink
                   className="portfolio-grid__card-link btn"
-                  to={`/portfolio/${item.slug}`}
+                  to={`/projects/${item.slug}`}
                 >
                   View
                 </NavLink>
