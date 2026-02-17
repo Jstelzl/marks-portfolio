@@ -1,8 +1,6 @@
 import { NavLink } from 'react-router-dom'
-import PageHeader from '../components/PageHeader'
 import {
   counters,
-  heroImage,
   portfolioItems,
   services,
   testimonials,
@@ -11,10 +9,29 @@ import {
 function Home() {
   return (
     <>
-      <PageHeader
-        title="Construction Contractor Portfolio"
-        subtitle="Quality builds, clear timelines, and craftsmanship you can trust."
-      />
+      <section className="contact-us-today">
+        <h2 className="contact-us-today__title">Contact Us Today</h2>
+        <div className="row">
+          <div className="col-xs-12  col-md-4">
+            <NavLink to="/contact" className="contact-us-today__option">
+              <i className="fa  fa-phone  fa-3x" aria-hidden="true"></i>
+              <span className="contact-us-today__label">Call</span>
+            </NavLink>
+          </div>
+          <div className="col-xs-12  col-md-4">
+            <NavLink to="/contact" className="contact-us-today__option">
+              <i className="fa  fa-map-marker  fa-3x" aria-hidden="true"></i>
+              <span className="contact-us-today__label">Location</span>
+            </NavLink>
+          </div>
+          <div className="col-xs-12  col-md-4">
+            <NavLink to="/contact" className="contact-us-today__option">
+              <i className="fa  fa-desktop  fa-3x" aria-hidden="true"></i>
+              <span className="contact-us-today__label">Email</span>
+            </NavLink>
+          </div>
+        </div>
+      </section>
       <section className="row">
         <div className="col-xs-12 text-xs-center">
           <h2>Contracting Services</h2>
@@ -36,93 +53,35 @@ function Home() {
         ))}
       </section>
 
-      <section className="portfolio-grid">
-        <div className="portfolio-grid__header">
-          <h2>Recent Projects</h2>
-          <ul className="portfolio-grid__nav">
-            <li className="portfolio-grid__nav-item is-active">
-              <span className="portfolio-grid__nav-link">All</span>
-            </li>
-            <li className="portfolio-grid__nav-item">
-              <span className="portfolio-grid__nav-link">Exterier</span>
-            </li>
-            <li className="portfolio-grid__nav-item">
-              <span className="portfolio-grid__nav-link">Interier</span>
-            </li>
-            <li className="portfolio-grid__nav-item">
-              <span className="portfolio-grid__nav-link">Remodels</span>
-            </li>
-          </ul>
-        </div>
-        <div className="row">
-          {portfolioItems.map((item) => (
-            <div className="col-xs-12  col-sm-6  col-lg-3" key={item.title}>
-              <div className="portfolio-grid__card">
+      <section className="portfolio-grid  portfolio-grid--recent">
+        <h2>Recent Projects</h2>
+        <div className="portfolio-grid__cards">
+          {portfolioItems.slice(0, 3).map((item) => (
+            <div className="portfolio-grid__card" key={item.slug}>
+              <NavLink to={`/portfolio/${item.slug}`}>
                 <img
                   className="portfolio-grid__card-img"
                   src={item.image}
                   alt={item.title}
                 />
-                <div className="portfolio-grid__card-block">
-                  <h5 className="portfolio-grid__card-title">{item.title}</h5>
-                  <p className="portfolio-grid__card-text">{item.subtitle}</p>
-                  <a className="portfolio-grid__card-link btn" href="#">
-                    View
-                  </a>
-                </div>
+              </NavLink>
+              <div className="portfolio-grid__card-block">
+                <h5 className="portfolio-grid__card-title">{item.title}</h5>
+                <p className="portfolio-grid__card-text">{item.subtitle}</p>
+                <NavLink
+                  className="portfolio-grid__card-link btn"
+                  to={`/portfolio/${item.slug}`}
+                >
+                  View
+                </NavLink>
               </div>
             </div>
           ))}
         </div>
-      </section>
-
-      <section className="row">
-        <div className="col-xs-12  col-lg-6">
-          <h2>Project Walkthroughs</h2>
-          <p>
-            Share walkthroughs of finished jobs, before-and-after clips, or
-            client case studies.
-          </p>
-          <div className="card">
-            <video
-              className="img-fluid"
-              controls
-              poster={heroImage}
-              aria-label="Portfolio reel placeholder"
-            >
-              <p>Add video files under /public/assets to enable playback.</p>
-            </video>
-          </div>
-        </div>
-        <div className="col-xs-12  col-lg-6">
-          <div className="card  person-profile">
-            <img
-              className="person-profile__image  wp-post-image"
-              src={heroImage}
-              alt="Profile portrait"
-            />
-            <div className="card-block  person-profile__container">
-              <div className="person-profile__social-icons">
-                <NavLink className="person-profile__social-icon" to="/contact">
-                  <i className="fa  fa-phone"></i>
-                </NavLink>
-                <NavLink className="person-profile__social-icon" to="/contact">
-                  <i className="fa  fa-envelope"></i>
-                </NavLink>
-                <NavLink className="person-profile__social-icon" to="/contact">
-                  <i className="fa  fa-map-marker"></i>
-                </NavLink>
-              </div>
-              <div className="person-profile__content">
-                <span className="person-profile__tag">Licensed Contractor</span>
-                <h4 className="card-title  person-profile__name">Mark Stelzl</h4>
-                <p className="card-text  person-profile__description">
-                  General contractor focused on quality craftsmanship,
-                  transparency, and lasting results.
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="portfolio-grid__view-all">
+          <NavLink className="btn  btn-secondary" to="/portfolio">
+            View All Projects
+          </NavLink>
         </div>
       </section>
 

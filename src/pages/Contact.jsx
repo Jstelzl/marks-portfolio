@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import { counters } from '../data/siteData'
 
@@ -7,13 +6,13 @@ function Contact() {
     <>
       <PageHeader
         title="Contact"
-        subtitle="Tell us about your project and we’ll follow up quickly."
+        subtitle="Tell us about your project and we'll follow up quickly."
       />
       <section className="row">
         <div className="col-xs-12  col-lg-7">
           <h2>Request a Quote</h2>
           <p>
-            Tell us about your project scope, timeline, and location. We’ll
+            Tell us about your project scope, timeline, and location. We'll
             follow up with next steps and a detailed estimate.
           </p>
           <div className="card">
@@ -43,19 +42,6 @@ function Contact() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="call-to-action  clearfix">
-        <div className="call-to-action__text">
-        </div>
-        <div className="call-to-action__button">
-          <NavLink className="btn  btn-primary" to="/contact">
-            Get a Quote
-          </NavLink>
-          <NavLink className="btn  btn-secondary" to="/portfolio">
-            View Projects
-          </NavLink>
         </div>
       </section>
     </>

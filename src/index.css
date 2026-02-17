@@ -92,6 +92,13 @@ body {
   .header__featured-link {
     flex-shrink: 0;
   }
+
+  /* Keep Free Quote bright yellow when active - but allow dim on hover */
+  .header__featured-link .btn-primary.active:not(:hover):not(:focus),
+  .header__featured-link a.btn-primary[class*="active"]:not(:hover):not(:focus) {
+    background-color: #edac15 !important;
+    border-color: #edac15 !important;
+  }
 }
 
 .menu-item--home .home-icon,
@@ -108,6 +115,14 @@ body {
 @media (min-width: 992px) {
   .menu-item--home + .menu-item {
     margin-left: 1.5rem;
+  }
+}
+
+/* Active nav link - same yellow bar as hover, persists until user navigates elsewhere */
+@media (min-width: 992px) {
+  .main-navigation > .menu-item > a.nav-link.is-active {
+    color: #333333;
+    border-bottom: 0.25rem solid #edac15;
   }
 }
 
@@ -243,14 +258,125 @@ body {
 
 
 
+/* All cards under single parent - CSS Grid ensures equal height */
+.portfolio-grid__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 544px) {
+  .portfolio-grid__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .portfolio-grid__cards {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Recent Projects on Home - 3 cards, 3 columns on desktop */
+.portfolio-grid--recent .portfolio-grid__cards {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 544px) {
+  .portfolio-grid--recent .portfolio-grid__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .portfolio-grid--recent .portfolio-grid__cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.portfolio-grid__view-all {
+  margin-top: 1.25rem;
+  text-align: left;
+}
+
+.portfolio-grid__view-all .btn {
+  border: none;
+  background: none;
+  box-shadow: none;
+  padding-left: 1rem;
+  border-left: 3px solid transparent;
+  color: #539ad0;
+  transition: color 200ms ease-out, border-color 200ms ease-out;
+}
+
+.portfolio-grid__view-all .btn:focus,
+.portfolio-grid__view-all .btn:hover,
+.portfolio-grid__view-all .btn:active {
+  background: none;
+  box-shadow: none;
+  color: #539ad0;
+  border-left-color: #539ad0;
+}
+
+.portfolio-grid__card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+/* Fixed aspect ratio image - same height for all cards in row */
+.portfolio-grid__card > a:first-child {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  width: 100%;
+  padding-bottom: 75%;
+  height: 0;
+  overflow: hidden;
+}
+
+.portfolio-grid__card > a:first-child img,
+.portfolio-grid__card-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .portfolio-grid__card-block {
+  flex: 1;
   min-height: calc(5 * 1.4em + 1.75rem);
   padding-bottom: 2.75rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-top: 1px solid #eeeeee;
 }
 
 .portfolio-grid__card-title,
 .portfolio-grid__card-text {
   line-height: 1.4;
+}
+
+/* Keep project names at consistent dark color - no yellow or gray change on hover */
+.portfolio-grid__card-title {
+  color: #333333;
+}
+
+.portfolio-grid__card:focus .portfolio-grid__card-title,
+.portfolio-grid__card:hover .portfolio-grid__card-title {
+  color: #333333;
 }
 
 .portfolio-grid__card-link {
@@ -259,5 +385,302 @@ body {
   bottom: 0.75rem;
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;
+}
+
+/* Portfolio filter buttons - reset to match nav-link style */
+.portfolio-grid__nav-link.btn-reset,
+.portfolio-grid__nav button.portfolio-grid__nav-link {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* Remove focus outline (yellow square), yellow underline on hover only */
+.portfolio-grid__nav button.portfolio-grid__nav-link:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.portfolio-grid__nav button.portfolio-grid__nav-link:hover {
+  border-bottom: 3px solid #edac15;
+}
+
+.portfolio-grid__nav-item.is-active button.portfolio-grid__nav-link {
+  border-bottom: 3px solid #edac15;
+}
+
+/* View links on project cards - no focus outline (yellow square) */
+.portfolio-grid__card-link.btn:focus,
+.portfolio-grid__card-link.btn:active,
+.portfolio-grid__card-link.btn:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* No underline on View buttons - Portfolio page */
+.portfolio-grid:not(.portfolio-grid--recent) .portfolio-grid__card-link.btn:hover,
+.portfolio-grid:not(.portfolio-grid--recent) .portfolio-grid__card-link.btn:focus {
+  text-decoration: none;
+}
+
+/* Project detail page */
+.project-detail__description {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .project-detail__description {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.project-detail h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.project-detail__photos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.project-detail__photo-item {
+  margin-bottom: 0;
+}
+
+.project-detail__photo-img {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.project-detail__photo-caption {
+  font-size: 0.9375rem;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+.project-detail .btn {
+  margin-top: 2rem;
+}
+
+/* Spacing between header and Projects section (Portfolio page) */
+.content-area .entry-content > .portfolio-grid:first-child {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .content-area .entry-content > .portfolio-grid:first-child {
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .content-area .entry-content > .portfolio-grid:first-child {
+    margin-top: 2.5rem;
+  }
+}
+
+/* Contact Us Today section (Home) - full-width gray background to viewport edges */
+.contact-us-today {
+  background-color: #f2f2f2;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 2rem calc(50vw - 50% + 0.9375rem);
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eeeeee;
+  box-sizing: border-box;
+}
+
+.contact-us-today__title {
+  text-align: center;
+  margin: 0 0 1.5rem;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .contact-us-today {
+    padding: 2.5rem 0;
+    margin-bottom: 2.25rem;
+  }
+
+  .contact-us-today__title {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.contact-us-today__option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+  text-decoration: none;
+  color: #333333;
+  transition: color 200ms ease-out;
+  border-radius: 4px;
+}
+
+.contact-us-today__option:hover,
+.contact-us-today__option:focus {
+  text-decoration: none;
+}
+
+.contact-us-today__option:hover {
+  color: #edac15;
+}
+
+.contact-us-today__option .fa {
+  margin-bottom: 0.75rem;
+  color: inherit;
+}
+
+.contact-us-today__label {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .contact-us-today {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.25rem;
+  }
+}
+
+.contact-us-today .row > [class*="col-"] {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .contact-us-today .row > [class*="col-"]:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Content spacing - responsive, less on mobile */
+.content-area .entry-content > section {
+  margin-bottom: 1.75rem;
+}
+
+.content-area .entry-content > section:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .content-area .entry-content > section {
+    margin-bottom: 2.25rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .content-area .entry-content > section {
+    margin-bottom: 3rem;
+  }
+}
+
+/* Section heading spacing */
+.content-area .entry-content h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .content-area .entry-content h2 {
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* Spacing after intro text in sections */
+.content-area .entry-content .text-xs-center {
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .content-area .entry-content .text-xs-center {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Icon box spacing when stacked on mobile */
+.content-area .entry-content .icon-box {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .content-area .entry-content .icon-box {
+    margin-bottom: 0;
+  }
+}
+
+/* Portfolio grid - space between heading and cards */
+.portfolio-grid > h2 {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .portfolio-grid > h2 {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.portfolio-grid__header + .portfolio-grid__cards,
+.portfolio-grid > h2 + .portfolio-grid__cards {
+  margin-top: 0;
+}
+
+/* Card and block spacing */
+.content-area .entry-content .card {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .content-area .entry-content .card {
+    margin-bottom: 0;
+  }
+}
+
+/* Row columns - vertical gap when stacked */
+.content-area .entry-content .row > [class*="col-"] {
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .content-area .entry-content .row > [class*="col-"]:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Testimonial and number-counters section */
+.content-area .entry-content .testimonial,
+.content-area .entry-content .number-counters {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 992px) {
+  .content-area .entry-content .testimonial,
+  .content-area .entry-content .number-counters {
+    margin-bottom: 0;
+  }
+}
+
+/* Call to action - extra top spacing */
+.content-area .entry-content .call-to-action {
+  margin-top: 0.5rem;
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .content-area .entry-content .call-to-action {
+    margin-top: 1rem;
+    padding-top: 2rem;
+  }
 }
 

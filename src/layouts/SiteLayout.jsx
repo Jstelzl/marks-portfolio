@@ -147,6 +147,7 @@ function SiteLayout() {
                     to="/portfolio"
                     style={hoveredItem === 'portfolio' ? navHoverStyle : undefined}
                     {...makeLinkHandlers('portfolio')}
+                    end={false}
                   >
                     Portfolio
                   </NavLink>
@@ -193,14 +194,14 @@ function SiteLayout() {
                     style={hoveredItem === 'quote' ? navHoverStyle : undefined}
                     {...makeLinkHandlers('quote')}
                   >
-                    Get a Quote
+                    Free Quote
                   </NavLink>
                 </li>
               </ul>
             </nav>
             <div className="header__featured-link desktop-only-quote">
               <NavLink className="btn  btn-primary" to="/contact">
-                Get a Quote
+                Free Quote
               </NavLink>
             </div>
             </div>
