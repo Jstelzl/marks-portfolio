@@ -1,24 +1,31 @@
 import { NavLink } from 'react-router-dom'
-import PageHeader from '../components/PageHeader'
 import { heroImage } from '../data/siteData'
 
 function About() {
   return (
     <>
-      <PageHeader
-        title="About"
-        subtitle="Licensed contractor focused on safety and craftsmanship."
-      />
+      <div
+        className="about-hero"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      >
+        <div className="about-hero__overlay">
+          <div className="container">
+            <h1 className="about-hero__title  display-1">About</h1>
+            <p className="about-hero__subtitle">
+              Licensed contractor focused on safety and craftsmanship.
+            </p>
+          </div>
+        </div>
+      </div>
       <section className="row">
         <div className="col-xs-12  col-lg-6">
           <h2>About the Contractor</h2>
           <p>
-            We handle residential and light commercial construction with a
-            focus on quality craftsmanship, safety, and clear communication.
-          </p>
-          <p>
-            Our team provides detailed estimates, transparent timelines, and
-            on-site supervision to keep projects on track.
+            With over 15 years of experience, Vartanian Construction has been
+            serving the city of Charlotte NC and the surrounding area, providing
+            high quality contracting services. Specializing in remodels, additions,
+            ADUs, renovations, and light commercial, we prioritize quality and
+            deadlines with a focus on making your project happen!
           </p>
         </div>
         <div className="col-xs-12  col-lg-6">
@@ -42,7 +49,7 @@ function About() {
               </div>
               <div className="person-profile__content">
                 <span className="person-profile__tag">Licensed Contractor</span>
-                <h4 className="card-title  person-profile__name">Mark Stelzl</h4>
+                <h4 className="card-title  person-profile__name">Mark Vartanian</h4>
                 <p className="card-text  person-profile__description">
                   General contractor focused on quality craftsmanship,
                   transparency, and lasting results.

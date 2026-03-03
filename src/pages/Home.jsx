@@ -48,16 +48,25 @@ function Home() {
       </section>
 
       <section className="bio-section">
-        <h2 className="bio-section__title">About Our Team</h2>
+        <h2 className="bio-section__title">Built Right. Built On Time. Built to Last.</h2>
         <p className="bio-section__text">
-          We are a team of licensed contractors dedicated to quality craftsmanship,
-          clear communication, and lasting results. With years of experience in
-          residential and light commercial construction, we bring expertise and
-          reliability to every project.
+          For over 15 years, Vartanian Construction has delivered high-quality
+          remodels, additions, ADUs, and light commercial projects across
+          Charlotte and the surrounding area. Precision craftsmanship, clear
+          timelines, and results you can trust.
         </p>
-        <NavLink className="btn  btn-primary  bio-section__button" to="/contact">
-          Get a free estimate today
-        </NavLink>
+        <div className="bio-section__cta">
+          <NavLink className="hero-cta  hero-cta--primary" to="/contact">
+            Request a Consultation
+          </NavLink>
+          <NavLink className="hero-cta  hero-cta--secondary" to="/projects">
+            <span className="hero-cta__icon" aria-hidden="true">
+              <i className="fa fa-wrench"></i>
+              <i className="fa fa-hammer"></i>
+            </span>
+            View Our Work
+          </NavLink>
+        </div>
       </section>
 
       <section className="portfolio-grid  portfolio-grid--recent">
