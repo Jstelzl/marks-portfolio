@@ -169,3 +169,31 @@ export const counters = [
   { icon: 'fa-calendar', number: 15, title: 'Years' },
   { icon: 'fa-check', number: 100, title: 'Inspections Passed' },
 ]
+
+export const contactFaqs = [
+  {
+    question: 'How long does a typical project take?',
+    answer:
+      'Timeline varies by scope—smaller renovations may take 2–4 weeks, while larger remodels or additions can run 2–3 months. We provide a clear schedule in your estimate and keep you updated throughout.',
+  },
+  {
+    question: 'Do you handle permits and inspections?',
+    answer:
+      'Yes. We pull necessary permits and coordinate inspections for all structural, electrical, and plumbing work. You won\'t need to manage this yourself.',
+  },
+  {
+    question: 'What areas do you serve?',
+    answer:
+      'We serve Charlotte, NC, and the greater metro area, including surrounding suburbs and towns. Contact us to confirm we cover your location.',
+  },
+  {
+    question: 'How do estimates and pricing work?',
+    answer:
+      'After you describe your project, we schedule a site visit or call to understand scope. You\'ll receive a written estimate with line items. We\'re happy to work within your budget where possible.',
+  },
+  {
+    question: 'What types of projects do you take on?',
+    answer:
+      'We specialize in remodels, additions, ADUs, renovations, and light commercial work. This includes kitchens, baths, flooring, structural repairs, exterior siding, and tenant improvements.',
+  },
+]

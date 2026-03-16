@@ -19,7 +19,6 @@ function Home() {
   return (
     <>
       <section className="contact-us-today">
-        <h2 className="contact-us-today__title">Contact Us Today</h2>
         <div className="row">
           <div className="col-xs-12  col-md-4">
             <button
@@ -49,6 +48,7 @@ function Home() {
 
       <section className="bio-section">
         <h2 className="bio-section__title">Built Right. Built On Time. Built to Last.</h2>
+        <p className="bio-section__subtitle">Your vision. Our expertise. Real results.</p>
         <p className="bio-section__text">
           For over 15 years, Vartanian Construction has delivered high-quality
           remodels, additions, ADUs, and light commercial projects across

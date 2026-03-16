@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import PageHeader from '../components/PageHeader'
-import { counters, services } from '../data/siteData'
+import { NavLink } from 'react-router-dom'
+import { contactFaqs, counters, services } from '../data/siteData'
+import { useCallConfirm } from '../context/CallConfirmContext'
 
 const CONTACT_EMAIL = 'mark@vartanianconstruction.com'
 const CONTACT_PHONE = '+1 (704) 219-1589'
 
 function Contact() {
+  const { initiateCall } = useCallConfirm() || {}
+  const [openFaqId, setOpenFaqId] = useState(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,12 +30,43 @@ function Contact() {
 
   return (
     <>
-      <PageHeader
-        title="Contact"
-        subtitle="Tell us about your project and we'll follow up quickly."
-      />
-      <section className="row">
+      <section className="contact-us-today">
+        <div className="row">
+          <div className="col-xs-12  col-md-6">
+            <button
+              type="button"
+              className="contact-us-today__option"
+              onClick={() => initiateCall?.()}
+              aria-label="Call +1 (704) 219-1589"
+            >
+              <i className="fa  fa-phone  fa-3x" aria-hidden="true"></i>
+              <span className="contact-us-today__label">+1 (704) 219-1589</span>
+            </button>
+          </div>
+          <div className="col-xs-12  col-md-6">
+            <NavLink to="/contact" className="contact-us-today__option">
+              <i className="fa  fa-map-marker  fa-3x" aria-hidden="true"></i>
+              <span className="contact-us-today__label">Location</span>
+            </NavLink>
+          </div>
+        </div>
+      </section>
+      <section className="row  contact-form-row">
         <div className="col-xs-12  col-lg-7">
+          <div className="number-counters  number-counters--contact" data-speed="1400">
+            {counters.map((counter) => (
+              <div className="number-counter" key={counter.title}>
+                <i className={`number-counter__icon  fa  ${counter.icon}`} aria-hidden="true" />
+                <div
+                  className="number-counter__number  js-number"
+                  data-to={counter.number}
+                >
+                  {counter.number}
+                </div>
+                <div className="number-counter__title">{counter.title}</div>
+              </div>
+            ))}
+          </div>
           <h2>Request a Quote</h2>
           <p>
             Tell us about your project scope, timeline, and location. We'll
@@ -164,19 +198,37 @@ function Contact() {
           </div>
         </div>
         <div className="col-xs-12  col-lg-5">
-          <div className="number-counters" data-speed="1400">
-            {counters.map((counter) => (
-              <div className="number-counter" key={counter.title}>
-                <i className={`number-counter__icon  fa  ${counter.icon}`} aria-hidden="true" />
-                <div
-                  className="number-counter__number  js-number"
-                  data-to={counter.number}
-                >
-                  {counter.number}
-                </div>
-                <div className="number-counter__title">{counter.title}</div>
-              </div>
-            ))}
+          <div className="contact-faq">
+            <h2 className="contact-faq__title">Frequently Asked Questions</h2>
+            <div className="accordion">
+              {contactFaqs.map((faq, index) => {
+                const isOpen = openFaqId === index
+                return (
+                  <div className="accordion__panel" key={index}>
+                    <h4 className="panel-title">
+                      <button
+                        type="button"
+                        className={`contact-faq__toggle${isOpen ? '' : ' collapsed'}`}
+                        onClick={() => setOpenFaqId(isOpen ? null : index)}
+                        aria-expanded={isOpen}
+                        aria-controls={`faq-content-${index}`}
+                        id={`faq-trigger-${index}`}
+                      >
+                        {faq.question}
+                      </button>
+                    </h4>
+                    <div
+                      id={`faq-content-${index}`}
+                      className={`accordion__content  collapse${isOpen ? ' in' : ''}`}
+                      role="region"
+                      aria-labelledby={`faq-trigger-${index}`}
+                    >
+                      <div className="panel-body">{faq.answer}</div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </section>

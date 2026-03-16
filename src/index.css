@@ -1069,6 +1069,13 @@ div.call-confirm-actions {
   font-size: 1.5rem;
 }
 
+.bio-section__subtitle {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #555555;
+}
+
 .bio-section__text {
   margin: 0 0 2rem;
   line-height: 1.6;
@@ -1164,6 +1171,11 @@ div.call-confirm-actions {
 
   .bio-section__title {
     font-size: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .bio-section__subtitle {
+    font-size: 1.2rem;
     margin-bottom: 1.25rem;
   }
 
@@ -1300,6 +1312,74 @@ div.call-confirm-actions {
 .content-area .entry-content .testimonial,
 .content-area .entry-content .number-counters {
   margin-bottom: 1rem;
+}
+
+/* Contact page: stats section above form */
+.number-counters--contact {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Contact page: two-column layout - stats+form left, FAQ right */
+.contact-form-row {
+  align-items: flex-start;
+}
+
+.contact-form-row .number-counters--contact {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* Contact FAQ accordion - style button like theme's panel-title a */
+.contact-faq__title {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.contact-faq .accordion__panel .contact-faq__toggle {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  color: #333333;
+  padding: 1.375rem 1.25rem 1.375rem 3.4375rem;
+  font-size: 0.875rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
+  cursor: pointer;
+  transition: all 200ms ease-out;
+  font-family: inherit;
+}
+
+.contact-faq .accordion__panel:first-of-type .contact-faq__toggle {
+  border-top: 0;
+}
+
+.contact-faq .accordion__panel .contact-faq__toggle::before {
+  position: absolute;
+  content: '\f068';
+  font-family: 'FontAwesome';
+  left: 0.96875rem;
+  top: calc(50% - 0.78125rem);
+  width: 1.5625rem;
+  height: 1.5625rem;
+  text-align: center;
+  line-height: 1.625rem;
+  color: #999999;
+}
+
+.contact-faq .accordion__panel .contact-faq__toggle.collapsed::before {
+  content: '\f067';
+}
+
+.contact-faq .accordion__panel .contact-faq__toggle:hover {
+  background-color: #f2f2f2;
+  text-decoration: none;
+}
+
+.contact-faq .accordion__panel .contact-faq__toggle:focus {
+  outline: none;
 }
 
 @media (min-width: 992px) {
@@ -1742,6 +1822,11 @@ div.call-confirm-actions {
     margin-bottom: 1.5rem;
   }
 
+  .bio-section__subtitle {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+  }
+
   .bio-section__text {
     margin-bottom: 1.5rem;
   }
@@ -1970,6 +2055,10 @@ div.call-confirm-actions {
   /* Bio section - larger text and button on mobile */
   .bio-section__title {
     font-size: 2rem;
+  }
+
+  .bio-section__subtitle {
+    font-size: 1.3rem;
   }
 
   .bio-section__text {
