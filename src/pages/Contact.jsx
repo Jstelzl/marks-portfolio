@@ -1,13 +1,10 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
 import { contactFaqs, counters } from '../data/siteData'
-import { useCallConfirm } from '../context/CallConfirmContext'
 
 const CONTACT_EMAIL = 'mark@vartanianconstruction.com'
 const CONTACT_PHONE = '+1 (704) 219-1589'
 
 function Contact() {
-  const { initiateCall } = useCallConfirm() || {}
   const [openFaqId, setOpenFaqId] = useState(null)
   const [formData, setFormData] = useState({
     name: '',
@@ -29,28 +26,6 @@ function Contact() {
 
   return (
     <>
-      <section className="contact-us-today">
-        <div className="row">
-          <div className="col-xs-12  col-md-6">
-            <button
-              type="button"
-              className="contact-us-today__option"
-              onClick={() => initiateCall?.()}
-              aria-label="Call +1 (704) 219-1589"
-            >
-              <i className="fa  fa-phone  fa-3x" aria-hidden="true"></i>
-              <span className="contact-us-today__label contact-us-today__label--phone">+1 (704) 219-1589</span>
-              <span className="contact-us-today__label contact-us-today__label--call-mobile">Call</span>
-            </button>
-          </div>
-          <div className="col-xs-12  col-md-6">
-            <Link to="/contact" className="contact-us-today__option">
-              <i className="fa  fa-map-marker  fa-3x" aria-hidden="true"></i>
-              <span className="contact-us-today__label">Location</span>
-            </Link>
-          </div>
-        </div>
-      </section>
       <section className="row  contact-form-row">
         <div className="col-xs-12">
           <div className="card">

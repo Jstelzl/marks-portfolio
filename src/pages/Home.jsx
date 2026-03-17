@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import {
   counters,
   portfolioItems,
@@ -12,8 +12,23 @@ const MOBILE_BREAKPOINT = 768
 function Home() {
   const [expandedCard, setExpandedCard] = useState(null)
   const [contactExpanded, setContactExpanded] = useState(false)
+  const [contactJustExpanded, setContactJustExpanded] = useState(false)
   const { initiateCall } = useCallConfirm() || {}
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (contactExpanded) {
+      const blurTimer = requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const el = document.activeElement
+          if (el?.closest?.('.contact-us-today__more')) {
+            el.blur()
+          }
+        })
+      })
+      return () => cancelAnimationFrame(blurTimer)
+    }
+  }, [contactExpanded])
 
   const handleCardClick = (e, slug) => {
     if (e.target.closest('.portfolio-grid__card-link')) return
@@ -42,19 +57,19 @@ function Home() {
           </div>
           <div
             id="contact-us-today__more"
-            className={`contact-us-today__more${contactExpanded ? ' is-expanded' : ''}`}
+            className={`contact-us-today__more${contactExpanded ? ' is-expanded' : ''}${contactJustExpanded ? ' is-just-expanded' : ''}`}
           >
             <div className="col-xs-12  col-md-4">
-              <NavLink to="/contact" className="contact-us-today__option">
+              <Link to="/contact" className="contact-us-today__option">
                 <i className="fa  fa-map-marker  fa-3x" aria-hidden="true"></i>
                 <span className="contact-us-today__label">Location</span>
-              </NavLink>
+              </Link>
             </div>
             <div className="col-xs-12  col-md-4">
-              <NavLink to="/contact" className="contact-us-today__option">
+              <Link to="/contact" className="contact-us-today__option">
                 <i className="fa  fa-desktop  fa-3x" aria-hidden="true"></i>
                 <span className="contact-us-today__label">Email</span>
-              </NavLink>
+              </Link>
             </div>
           </div>
           <button

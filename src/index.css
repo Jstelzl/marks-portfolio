@@ -726,12 +726,36 @@ div.call-confirm-actions {
   font: inherit;
 }
 
-/* Projects filter - dropdown with All + expandable list */
-.portfolio-grid__filter {
+/* Desktop filter: horizontal nav - hidden on mobile */
+.portfolio-grid__filter--desktop {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .portfolio-grid__filter--desktop {
+    display: block;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .portfolio-grid__nav--desktop .portfolio-grid__nav-item {
+    display: inline-block !important;
+    margin-right: 1.9375rem !important;
+  }
+}
+
+/* Mobile filter: dropdown - hidden on desktop */
+.portfolio-grid__filter--mobile {
   position: relative;
   margin-top: 1.25rem;
   padding-top: 1.25rem;
   border-top: 3px solid #edac15;
+}
+
+@media (min-width: 992px) {
+  .portfolio-grid__filter--mobile {
+    display: none;
+  }
 }
 
 .portfolio-grid__filter-trigger {
@@ -2155,6 +2179,20 @@ div.call-confirm-actions {
   .contact-us-today__option:focus-visible {
     outline: none !important;
     box-shadow: none !important;
+    color: #333333 !important;
+  }
+
+  /* Expanded dropdown options: no yellow on focus when dropdown opens (Location/Email) */
+  .contact-us-today__more .contact-us-today__option:hover,
+  .contact-us-today__more .contact-us-today__option:focus,
+  .contact-us-today__more .contact-us-today__option:focus-visible {
+    color: #333333 !important;
+  }
+
+  /* Suppress hover/focus color for 350ms after dropdown opens - prevents sticky hover from tap */
+  .contact-us-today__more.is-just-expanded .contact-us-today__option:hover,
+  .contact-us-today__more.is-just-expanded .contact-us-today__option:focus,
+  .contact-us-today__more.is-just-expanded .contact-us-today__option:focus-visible {
     color: #333333 !important;
   }
 

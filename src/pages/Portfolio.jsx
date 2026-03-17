@@ -54,7 +54,38 @@ function Portfolio() {
       <section className="portfolio-grid">
         <div className="portfolio-grid__header">
           <h2>Projects</h2>
-          <div className="portfolio-grid__filter">
+          {/* Desktop: horizontal nav tabs */}
+          <nav className="portfolio-grid__filter portfolio-grid__filter--desktop" aria-label="Filter projects">
+            <ul
+              className={`portfolio-grid__nav portfolio-grid__nav--desktop${
+                hoveredFilter ? ' portfolio-grid__nav-has-hover' : ''
+              }`}
+              role="tablist"
+              onMouseLeave={() => setHoveredFilter(null)}
+            >
+              {portfolioCategories.map((cat) => (
+                <li
+                  key={cat.slug}
+                  className={`portfolio-grid__nav-item${
+                    activeFilter === cat.slug ? ' is-active' : ''
+                  }${hoveredFilter === cat.slug ? ' is-hovered' : ''}`}
+                  onMouseEnter={() => setHoveredFilter(cat.slug)}
+                >
+                  <button
+                    type="button"
+                    className="portfolio-grid__nav-link"
+                    onClick={() => setActiveFilter(cat.slug)}
+                    role="tab"
+                    aria-selected={activeFilter === cat.slug}
+                  >
+                    {cat.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          {/* Mobile: dropdown with All + chevron */}
+          <div className="portfolio-grid__filter portfolio-grid__filter--mobile">
             <div className="portfolio-grid__filter-trigger">
               <button
                 type="button"
