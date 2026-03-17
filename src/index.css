@@ -284,7 +284,7 @@ a:focus-visible,
   .main-navigation {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.0625rem;
     align-items: center;
   }
 
@@ -293,25 +293,25 @@ a:focus-visible,
   }
 
   .menu-item--home .home-icon {
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
 
   .main-navigation a {
     color: #999999;
     display: inline-block;
-    padding-bottom: 0.25rem;
-    font-size: 2rem;
+    padding-bottom: 0.2125rem;
+    font-size: 1.7rem;
     text-decoration: none !important;
     box-shadow: none;
     padding-left: 0 !important;
     padding-right: 0 !important;
     position: relative;
     background: none;
-    border-bottom: 0.25rem solid transparent !important;
+    border-bottom: 0.2125rem solid transparent !important;
   }
 
   .header__navigation.in .main-navigation a {
-    border-bottom: 0.25rem solid transparent !important;
+    border-bottom: 0.2125rem solid transparent !important;
   }
 
   .header__navigation.in .main-navigation .menu-item:hover > a,
