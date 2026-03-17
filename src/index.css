@@ -726,6 +726,120 @@ div.call-confirm-actions {
   font: inherit;
 }
 
+/* Projects filter - dropdown with All + expandable list */
+.portfolio-grid__filter {
+  position: relative;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 3px solid #edac15;
+}
+
+.portfolio-grid__filter-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.portfolio-grid__filter-label {
+  font-weight: bold;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  color: #999999;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+.portfolio-grid__filter-label.is-active,
+.portfolio-grid__filter-label.is-active:hover,
+.portfolio-grid__filter-label.is-active:focus {
+  color: #000000 !important;
+}
+
+.portfolio-grid__filter-label:hover {
+  color: inherit;
+}
+
+.portfolio-grid__filter-label:focus {
+  outline: none;
+}
+
+.portfolio-grid__filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #999999;
+  transition: color 200ms ease;
+}
+
+.portfolio-grid__filter-toggle:hover {
+  color: #333333;
+}
+
+.portfolio-grid__filter-toggle .fa {
+  font-size: 0.75rem;
+}
+
+.portfolio-grid__filter-toggle:focus {
+  outline: none;
+}
+
+/* Collapsible nav list - hidden by default */
+.portfolio-grid__nav.portfolio-grid__nav--dropdown {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.portfolio-grid__nav.portfolio-grid__nav--dropdown.is-expanded {
+  max-height: 20rem;
+  margin-top: 0.5rem;
+}
+
+.portfolio-grid__nav-item.portfolio-grid__nav-item--indent {
+  padding-left: 1.25rem;
+}
+
+.portfolio-grid__nav--dropdown .portfolio-grid__nav-item {
+  display: block;
+  margin-right: 0;
+  margin-bottom: 0.25rem;
+  /* Override theme: keep in flow so items don't overlap when one is active */
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+}
+
+.portfolio-grid__nav--dropdown .portfolio-grid__nav-item:last-child {
+  margin-bottom: 0;
+}
+
+.portfolio-grid__nav--dropdown .portfolio-grid__nav-link {
+  display: block;
+  text-align: left;
+  padding: 0.35rem 0;
+  color: #999999;
+}
+
+.portfolio-grid__nav--dropdown .portfolio-grid__nav-item.is-active .portfolio-grid__nav-link {
+  color: #000000;
+  font-weight: bold;
+}
+
+/* No yellow underline in dropdown - only the filter bar above */
+.portfolio-grid__nav--dropdown .portfolio-grid__nav-item::after {
+  display: none !important;
+}
+
 /* Projects filter nav - flush items with no gaps (prevents hover flash between items) */
 .portfolio-grid__nav-item {
   margin-right: 0 !important;
@@ -802,6 +916,11 @@ div.call-confirm-actions {
   /* Hide active bar when hovering another nav (same as header) */
   .portfolio-grid__nav.portfolio-grid__nav-has-hover .portfolio-grid__nav-item.is-active:not(.is-hovered)::after {
     visibility: hidden;
+  }
+
+  /* Dropdown nav stays vertical on desktop */
+  .portfolio-grid__nav--dropdown .portfolio-grid__nav-item {
+    display: block !important;
   }
 }
 

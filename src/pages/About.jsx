@@ -21,11 +21,7 @@ function About() {
         <div className="col-xs-12  col-lg-6">
           <h2>About the Contractor</h2>
           <p>
-            With over 15 years of experience, Vartanian Construction has been
-            serving the city of Charlotte NC and the surrounding area, providing
-            high quality contracting services. Specializing in remodels, additions,
-            ADUs, renovations, and light commercial, we prioritize quality and
-            deadlines with a focus on making your project happen!
+            Vartanian Construction is the solution to your home construction projects. Located in Charlotte, NC, we specialize in most any construction or home improvement project – home additions; kitchen and bath renovations; decks and porches; and even smaller projects like replacing doors or installing a sink.
           </p>
         </div>
         <div className="col-xs-12  col-lg-6">

@@ -10,6 +10,7 @@ const ITEMS_PER_PAGE = 12
 function Portfolio() {
   const [activeFilter, setActiveFilter] = useState('all')
   const [hoveredFilter, setHoveredFilter] = useState(null)
+  const [filterExpanded, setFilterExpanded] = useState(false)
   const [expandedCard, setExpandedCard] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -53,32 +54,59 @@ function Portfolio() {
       <section className="portfolio-grid">
         <div className="portfolio-grid__header">
           <h2>Projects</h2>
-          <ul
-            className={`portfolio-grid__nav${hoveredFilter ? ' portfolio-grid__nav-has-hover' : ''}`}
-            role="tablist"
-            onMouseLeave={() => setHoveredFilter(null)}
-          >
-            {portfolioCategories.map((cat) => (
-              <li
-                key={cat.slug}
-                className={`portfolio-grid__nav-item${
-                  activeFilter === cat.slug ? ' is-active' : ''
-                }${hoveredFilter === cat.slug ? ' is-hovered' : ''}`}
-                onMouseEnter={() => setHoveredFilter(cat.slug)}
-                onMouseLeave={() => setHoveredFilter(null)}
+          <div className="portfolio-grid__filter">
+            <div className="portfolio-grid__filter-trigger">
+              <button
+                type="button"
+                className={`portfolio-grid__filter-label${activeFilter === 'all' ? ' is-active' : ''}`}
+                onClick={() => setActiveFilter('all')}
+                aria-label="Show all projects"
               >
-                <button
-                  type="button"
-                  className="portfolio-grid__nav-link"
-                  onClick={() => setActiveFilter(cat.slug)}
-                  role="tab"
-                  aria-selected={activeFilter === cat.slug}
-                >
-                  {cat.label}
-                </button>
-              </li>
-            ))}
-          </ul>
+                All
+              </button>
+              <button
+                type="button"
+                className="portfolio-grid__filter-toggle"
+                onClick={() => setFilterExpanded((prev) => !prev)}
+                aria-expanded={filterExpanded}
+                aria-controls="portfolio-filter-list"
+                aria-label={filterExpanded ? 'Collapse filter' : 'Expand filter'}
+              >
+                <i className={`fa fa-chevron-${filterExpanded ? 'down' : 'right'}`} aria-hidden="true" />
+              </button>
+            </div>
+            <ul
+              id="portfolio-filter-list"
+              className={`portfolio-grid__nav portfolio-grid__nav--dropdown${
+                filterExpanded ? ' is-expanded' : ''
+              }${hoveredFilter ? ' portfolio-grid__nav-has-hover' : ''}`}
+              role="tablist"
+              onMouseLeave={() => setHoveredFilter(null)}
+            >
+              {portfolioCategories
+                .filter((cat) => cat.slug !== 'all')
+                .map((cat) => (
+                  <li
+                    key={cat.slug}
+                    className={`portfolio-grid__nav-item portfolio-grid__nav-item--indent${
+                      activeFilter === cat.slug ? ' is-active' : ''
+                    }${hoveredFilter === cat.slug ? ' is-hovered' : ''}`}
+                    onMouseEnter={() => setHoveredFilter(cat.slug)}
+                    onMouseLeave={() => setHoveredFilter(null)}
+                  >
+                    <button
+                      type="button"
+                      className="portfolio-grid__nav-link"
+                      onClick={() => setActiveFilter(cat.slug)}
+                      role="tab"
+                      aria-selected={activeFilter === cat.slug}
+                    >
+                      {cat.label}
+                    </button>
+                  </li>
+                ))}
+            </ul>
+          </div>
         </div>
         <div className="portfolio-grid__cards">
           {visibleProjects.map((item) => (
