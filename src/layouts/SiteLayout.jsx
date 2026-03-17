@@ -261,9 +261,10 @@ function SiteLayout() {
                     type="button"
                     className="footer__phone-link"
                     onClick={initiateCall}
+                    aria-label="Call +1 (704) 219-1589"
                   >
                     <i className="fa  fa-phone  fa-lg" aria-hidden="true"></i>
-                    {' '}+1 (704) 219-1589
+                    {' '}Call
                   </button>
                 </p>
                 <p>

@@ -1053,6 +1053,65 @@ div.call-confirm-actions {
   }
 }
 
+/* Mobile: expandable contact options - text + arrow only */
+.contact-us-today__expand-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.5rem 0;
+  margin: 0 0 0.5rem;
+  border: none;
+  background: none;
+  color: #333333;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.contact-us-today__expand-toggle:hover {
+  color: #333333;
+}
+
+.contact-us-today__expand-toggle .fa {
+  font-size: 0.7rem;
+}
+
+.contact-us-today__more {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.contact-us-today__more.is-expanded {
+  max-height: 20rem;
+}
+
+.contact-us-today__more .col-xs-12 {
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .contact-us-today__expand-toggle {
+    display: none;
+  }
+
+  .contact-us-today__more {
+    display: contents;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .contact-us-today__more .col-xs-12 {
+    margin-bottom: 1rem;
+  }
+}
+
 /* Bio section - centered in parent, left-aligned text */
 .bio-section {
   text-align: left;
@@ -1086,6 +1145,25 @@ div.call-confirm-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+}
+
+/* Mobile: bio section buttons centered, column, same size */
+@media (max-width: 767px) {
+  .bio-section__cta {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .bio-section__cta .hero-cta {
+    width: 100%;
+    max-width: 16rem;
+    min-width: 0;
+    min-height: 3rem;
+    padding: 0.875rem 1.25rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+  }
 }
 
 /* Hero CTA buttons - rounded pill shape */
@@ -1529,6 +1607,24 @@ div.call-confirm-actions {
 /* Contact page: stats + FAQ below form */
 .contact-form-row .quote-cta-boxes {
   margin-top: 2.5rem;
+}
+
+.quote-cta-boxes__button-text--short {
+  display: none;
+}
+
+.quote-cta-boxes__button-text--full {
+  display: inline;
+}
+
+@media (max-width: 767px) {
+  .quote-cta-boxes__button-text--short {
+    display: inline;
+  }
+
+  .quote-cta-boxes__button-text--full {
+    display: none;
+  }
 }
 
 .quote-cta-boxes__button {
@@ -2084,6 +2180,18 @@ div.call-confirm-actions {
   /* No focus outline on card-block - card emphasis provides visual feedback */
   .portfolio-grid__card-block:focus {
     outline: none;
+  }
+
+  /* Mobile: whole card navigates to project - show image, cursor indicates clickability */
+  .portfolio-grid--recent .portfolio-grid__card {
+    cursor: pointer;
+  }
+
+  .portfolio-grid--recent .portfolio-grid__card-image {
+    height: 0;
+    padding-bottom: 75%;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   /* Larger card text on mobile for visibility */

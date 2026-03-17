@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import {
   counters,
   portfolioItems,
@@ -7,13 +7,21 @@ import {
 } from '../data/siteData'
 import { useCallConfirm } from '../context/CallConfirmContext'
 
+const MOBILE_BREAKPOINT = 768
+
 function Home() {
   const [expandedCard, setExpandedCard] = useState(null)
+  const [contactExpanded, setContactExpanded] = useState(false)
   const { initiateCall } = useCallConfirm() || {}
+  const navigate = useNavigate()
 
   const handleCardClick = (e, slug) => {
     if (e.target.closest('.portfolio-grid__card-link')) return
-    setExpandedCard((prev) => (prev === slug ? null : slug))
+    if (window.innerWidth < MOBILE_BREAKPOINT) {
+      navigate(`/projects/${slug}`)
+    } else {
+      setExpandedCard((prev) => (prev === slug ? null : slug))
+    }
   }
 
   return (
@@ -31,18 +39,35 @@ function Home() {
               <span className="contact-us-today__label">+1 (704) 219-1589</span>
             </button>
           </div>
-          <div className="col-xs-12  col-md-4">
-            <NavLink to="/contact" className="contact-us-today__option">
-              <i className="fa  fa-map-marker  fa-3x" aria-hidden="true"></i>
-              <span className="contact-us-today__label">Location</span>
-            </NavLink>
+          <div
+            id="contact-us-today__more"
+            className={`contact-us-today__more${contactExpanded ? ' is-expanded' : ''}`}
+          >
+            <div className="col-xs-12  col-md-4">
+              <NavLink to="/contact" className="contact-us-today__option">
+                <i className="fa  fa-map-marker  fa-3x" aria-hidden="true"></i>
+                <span className="contact-us-today__label">Location</span>
+              </NavLink>
+            </div>
+            <div className="col-xs-12  col-md-4">
+              <NavLink to="/contact" className="contact-us-today__option">
+                <i className="fa  fa-desktop  fa-3x" aria-hidden="true"></i>
+                <span className="contact-us-today__label">Email</span>
+              </NavLink>
+            </div>
           </div>
-          <div className="col-xs-12  col-md-4">
-            <NavLink to="/contact" className="contact-us-today__option">
-              <i className="fa  fa-desktop  fa-3x" aria-hidden="true"></i>
-              <span className="contact-us-today__label">Email</span>
-            </NavLink>
-          </div>
+          <button
+            type="button"
+            className="contact-us-today__expand-toggle"
+            onClick={() => setContactExpanded((prev) => !prev)}
+            aria-expanded={contactExpanded}
+            aria-controls="contact-us-today__more"
+          >
+            <span className="contact-us-today__expand-label">
+              {contactExpanded ? 'Show less' : 'Show more'}
+            </span>
+            <i className={`fa fa-chevron-${contactExpanded ? 'up' : 'down'}`} aria-hidden="true" />
+          </button>
         </div>
       </section>
 
@@ -150,7 +175,12 @@ function Home() {
           </div>
           <div className="quote-cta-boxes__button-box">
             <NavLink className="btn  quote-cta-boxes__button" to="/contact">
-              Get a Free Estimate
+              <span className="quote-cta-boxes__button-text  quote-cta-boxes__button-text--full">
+                Get a Free Estimate
+              </span>
+              <span className="quote-cta-boxes__button-text  quote-cta-boxes__button-text--short">
+                Free Estimate
+              </span>
             </NavLink>
           </div>
         </div>
