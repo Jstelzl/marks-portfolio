@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { contactFaqs, counters, services } from '../data/siteData'
+import { contactFaqs, counters } from '../data/siteData'
 import { useCallConfirm } from '../context/CallConfirmContext'
 
 const CONTACT_EMAIL = 'mark@vartanianconstruction.com'
@@ -13,7 +13,6 @@ function Contact() {
     name: '',
     email: '',
     phone: '',
-    projectType: '',
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
@@ -52,26 +51,7 @@ function Contact() {
         </div>
       </section>
       <section className="row  contact-form-row">
-        <div className="col-xs-12  col-lg-7">
-          <div className="number-counters  number-counters--contact" data-speed="1400">
-            {counters.map((counter) => (
-              <div className="number-counter" key={counter.title}>
-                <i className={`number-counter__icon  fa  ${counter.icon}`} aria-hidden="true" />
-                <div
-                  className="number-counter__number  js-number"
-                  data-to={counter.number}
-                >
-                  {counter.number}
-                </div>
-                <div className="number-counter__title">{counter.title}</div>
-              </div>
-            ))}
-          </div>
-          <h2>Request a Quote</h2>
-          <p>
-            Tell us about your project scope, timeline, and location. We'll
-            follow up with next steps and a detailed estimate.
-          </p>
+        <div className="col-xs-12">
           <div className="card">
             <div className="card-block">
               {submitted ? (
@@ -138,25 +118,6 @@ function Contact() {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="contact-project-type" className="form-control-label">
-                      Project type
-                    </label>
-                    <select
-                      id="contact-project-type"
-                      name="projectType"
-                      className="form-control"
-                      value={formData.projectType}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select a project type</option>
-                      {services.map((svc) => (
-                        <option key={svc.title} value={svc.title}>
-                          {svc.title}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-group">
                     <label htmlFor="contact-message" className="form-control-label">
                       Message
                     </label>
@@ -192,44 +153,67 @@ function Contact() {
                 </a>
               </p>
               <p>
-                <i className="fa fa-map-marker" aria-hidden="true" /> Service Area: Greater Metro Area
+                <i className="fa fa-map-marker" aria-hidden="true" /> Service Area: Greater Charlotte, NC Metro Area
               </p>
             </div>
           </div>
-        </div>
-        <div className="col-xs-12  col-lg-5">
-          <div className="contact-faq">
-            <h2 className="contact-faq__title">Frequently Asked Questions</h2>
-            <div className="accordion">
-              {contactFaqs.map((faq, index) => {
-                const isOpen = openFaqId === index
-                return (
-                  <div className="accordion__panel" key={index}>
-                    <h4 className="panel-title">
-                      <button
-                        type="button"
-                        className={`contact-faq__toggle${isOpen ? '' : ' collapsed'}`}
-                        onClick={() => setOpenFaqId(isOpen ? null : index)}
-                        aria-expanded={isOpen}
-                        aria-controls={`faq-content-${index}`}
-                        id={`faq-trigger-${index}`}
-                      >
-                        {faq.question}
-                      </button>
-                    </h4>
+          <section className="quote-cta-boxes">
+            <div className="quote-cta-boxes__inner">
+              <div className="quote-cta-boxes__stats-box">
+                <div className="number-counters" data-speed="1400">
+                  {counters.map((counter) => (
                     <div
-                      id={`faq-content-${index}`}
-                      className={`accordion__content  collapse${isOpen ? ' in' : ''}`}
-                      role="region"
-                      aria-labelledby={`faq-trigger-${index}`}
+                      className={`number-counter number-counter--${counter.title.toLowerCase().replace(/\s+/g, '-')}`}
+                      key={counter.title}
                     >
-                      <div className="panel-body">{faq.answer}</div>
+                      <i className={`number-counter__icon  fa  ${counter.icon}`}></i>
+                      <div
+                        className="number-counter__number  js-number"
+                        data-to={counter.number}
+                      >
+                        {counter.number}
+                      </div>
+                      <div className="number-counter__title">{counter.title}</div>
                     </div>
+                  ))}
+                </div>
+              </div>
+              <div className="quote-cta-boxes__faq-box">
+                <div className="contact-faq">
+                  <h2 className="contact-faq__title">Frequently Asked Questions</h2>
+                  <div className="accordion">
+                    {contactFaqs.map((faq, index) => {
+                      const isOpen = openFaqId === index
+                      return (
+                        <div className="accordion__panel" key={index}>
+                          <h4 className="panel-title">
+                            <button
+                              type="button"
+                              className={`contact-faq__toggle${isOpen ? '' : ' collapsed'}`}
+                              onClick={() => setOpenFaqId(isOpen ? null : index)}
+                              aria-expanded={isOpen}
+                              aria-controls={`faq-content-${index}`}
+                              id={`faq-trigger-${index}`}
+                            >
+                              {faq.question}
+                            </button>
+                          </h4>
+                          <div
+                            id={`faq-content-${index}`}
+                            className={`accordion__content  collapse${isOpen ? ' in' : ''}`}
+                            role="region"
+                            aria-labelledby={`faq-trigger-${index}`}
+                          >
+                            <div className="panel-body">{faq.answer}</div>
+                          </div>
+                        </div>
+                      )
+                    })}
                   </div>
-                )
-              })}
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
         </div>
       </section>
     </>

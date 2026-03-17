@@ -1314,20 +1314,54 @@ div.call-confirm-actions {
   margin-bottom: 1rem;
 }
 
-/* Contact page: stats section above form */
-.number-counters--contact {
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
-}
 
 /* Contact page: two-column layout - stats+form left, FAQ right */
 .contact-form-row {
   align-items: flex-start;
 }
 
-.contact-form-row .number-counters--contact {
+/* Contact page: stats box mimics Home/Projects - 2x2 grid, white bg, box-shadow */
+.quote-cta-boxes__stats-box--contact {
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding: 2rem 1.5rem;
+}
+
+.quote-cta-boxes__stats-box--contact .number-counters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.quote-cta-boxes__stats-box--contact .number-counter {
+  margin: 0;
+  flex: none;
+  min-width: 0;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .quote-cta-boxes__stats-box--contact .number-counter--projects {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+  .quote-cta-boxes__stats-box--contact .number-counter--clients {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+  .quote-cta-boxes__stats-box--contact .number-counter--years {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+  .quote-cta-boxes__stats-box--contact .number-counter--inspections-passed {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
 }
 
 /* Contact FAQ accordion - style button like theme's panel-title a */
@@ -1481,6 +1515,20 @@ div.call-confirm-actions {
   justify-content: center;
   padding: 2rem 1.5rem;
   background-color: #ffffff;
+}
+
+/* Contact page: FAQ replaces Get a Free Estimate button in quote-cta-boxes */
+.quote-cta-boxes__faq-box {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 2rem 1.5rem;
+  background-color: #ffffff;
+  overflow-y: auto;
+}
+
+/* Contact page: stats + FAQ below form */
+.contact-form-row .quote-cta-boxes {
+  margin-top: 2.5rem;
 }
 
 .quote-cta-boxes__button {
