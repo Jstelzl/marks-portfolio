@@ -19,7 +19,7 @@ function About() {
       </div>
       <section className="row">
         <div className="col-xs-12  col-lg-6">
-          <h2>About the Contractor</h2>
+          <h2>About Vartanian Construction</h2>
           <p>
             Vartanian Construction is the solution to your home construction projects. Located in Charlotte, NC, we specialize in most any construction or home improvement project – home additions; kitchen and bath renovations; decks and porches; and even smaller projects like replacing doors or installing a sink.
           </p>

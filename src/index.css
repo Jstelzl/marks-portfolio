@@ -1148,6 +1148,11 @@ div.call-confirm-actions {
   font-size: 1rem;
 }
 
+/* "Call" label - hidden on desktop, shown on mobile */
+.contact-us-today__label--call-mobile {
+  display: none;
+}
+
 @media (min-width: 768px) {
   .contact-us-today {
     padding-top: 3rem;
@@ -2132,15 +2137,32 @@ div.call-confirm-actions {
 
   .contact-us-today__option {
     text-align: center;
+    color: #333333 !important;
   }
 
-  /* Remove focus outline (yellow box) on mobile only - icons still turn yellow on hover/active */
+  /* On mobile: hide phone number, show "Call" label */
+  .contact-us-today__label--phone {
+    display: none;
+  }
+
+  .contact-us-today__label--call-mobile {
+    display: block;
+  }
+
+  /* Force black on focus/hover - avoids yellow on load (mobile can focus first element) */
+  .contact-us-today__option:hover,
   .contact-us-today__option:focus,
-  .contact-us-today__option:active,
   .contact-us-today__option:focus-visible {
     outline: none !important;
     box-shadow: none !important;
-    color: #edac15;
+    color: #333333 !important;
+  }
+
+  /* Yellow only during tap (:active) */
+  .contact-us-today__option:active {
+    outline: none !important;
+    box-shadow: none !important;
+    color: #edac15 !important;
   }
 
   .call-confirm-actions .btn:focus,

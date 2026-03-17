@@ -36,7 +36,8 @@ function Home() {
               aria-label="Call +1 (704) 219-1589"
             >
               <i className="fa  fa-phone  fa-3x" aria-hidden="true"></i>
-              <span className="contact-us-today__label">+1 (704) 219-1589</span>
+              <span className="contact-us-today__label contact-us-today__label--phone">+1 (704) 219-1589</span>
+              <span className="contact-us-today__label contact-us-today__label--call-mobile">Call</span>
             </button>
           </div>
           <div
