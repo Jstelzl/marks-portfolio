@@ -1546,6 +1546,28 @@ div.call-confirm-actions {
   align-items: flex-start;
 }
 
+/* Spacing between header and contact form */
+.content-area .entry-content > .contact-form-row:first-child {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .content-area .entry-content > .contact-form-row:first-child {
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .content-area .entry-content > .contact-form-row:first-child {
+    margin-top: 2.5rem;
+  }
+}
+
+.contact-form-card--highlighted {
+  box-shadow: 0 0 0 3px #edac15;
+  transition: box-shadow 200ms ease-out;
+}
+
 /* Contact page: stats box mimics Home/Projects - 2x2 grid, white bg, box-shadow */
 .quote-cta-boxes__stats-box--contact {
   margin-top: 0;
@@ -1840,6 +1862,73 @@ div.call-confirm-actions {
   margin-top: 0.5rem;
 }
 
+.contact-form__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.contact-form__actions .btn {
+  margin-top: 0;
+}
+
+.contact-form__clear {
+  color: #000;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+}
+
+.contact-form__clear:hover,
+.contact-form__clear:focus {
+  color: #000;
+  text-decoration: underline;
+}
+
+.contact-form__clear-icon {
+  display: inline-block;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-right: 0;
+  transition: width 0.2s ease, opacity 0.2s ease, margin-right 0.2s ease;
+}
+
+.contact-form__clear:hover .contact-form__clear-icon,
+.contact-form__clear:focus .contact-form__clear-icon {
+  width: 1em;
+  opacity: 1;
+  margin-right: 0.35em;
+}
+
+.contact-form .form-control {
+  border-radius: 0.5rem;
+}
+
+.contact-form .form-control.is-invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 1px #dc3545;
+}
+
+.contact-form .form-control.is-invalid::placeholder {
+  color: #dc3545;
+}
+
+.contact-form__error {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #dc3545;
+}
+
 .contact-message--success {
   padding: 1rem 0;
   color: #333;
@@ -1847,6 +1936,61 @@ div.call-confirm-actions {
 
 .contact-message--success strong {
   color: #1e5a8a;
+}
+
+.contact-message__send-new {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 2rem;
+  background: #edac15;
+  font: inherit;
+  color: #333;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s ease, color 0.2s ease;
+  outline: none;
+}
+
+/* Straight line under text - separate from pill, no rounded corners */
+.contact-message__send-new::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.25rem;
+  height: 2px;
+  background: #edac15;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.contact-message__send-new:hover,
+.contact-message__send-new:focus {
+  background: transparent;
+}
+
+.contact-message__send-new:hover::after,
+.contact-message__send-new:focus::after {
+  opacity: 1;
+}
+
+.contact-message__send-new-icon {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-right: 0;
+  transition: max-width 0.2s ease, opacity 0.2s ease, margin-right 0.2s ease;
+}
+
+.contact-message__send-new:hover .contact-message__send-new-icon,
+.contact-message__send-new:focus .contact-message__send-new-icon {
+  max-width: 1em;
+  opacity: 1;
+  margin-right: 0.5rem;
 }
 
 .contact-direct {

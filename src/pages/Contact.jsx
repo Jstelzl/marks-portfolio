@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { contactFaqs, counters } from '../data/siteData'
 
-const CONTACT_EMAIL = 'mark@vartanianconstruction.com'
+const CONTACT_EMAIL = 'josiahstelzl@gmail.com'
 const CONTACT_PHONE = '+1 (704) 219-1589'
+const FORM_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/YOUR_FORM_ID'
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const PHONE_REGEX = /^[\d\s\-\.\(\)]+$/  // digits, spaces, dashes, dots, parens - at least 10 digits
 
 function Contact() {
   const [openFaqId, setOpenFaqId] = useState(null)
@@ -12,23 +16,104 @@ function Contact() {
     phone: '',
     message: '',
   })
+  const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [formHighlighted, setFormHighlighted] = useState(false)
+  const formCardRef = useRef(null)
+
+  useEffect(() => {
+    const handler = () => {
+      setFormHighlighted(true)
+      formCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      setTimeout(() => {
+        const input = document.getElementById('contact-name')
+        const sendNewBtn = document.querySelector('.contact-message__send-new')
+        if (input) input.focus()
+        else if (sendNewBtn) sendNewBtn.focus()
+      }, 100)
+      setTimeout(() => setFormHighlighted(false), 3000)
+    }
+    window.addEventListener('focusContactForm', handler)
+    return () => window.removeEventListener('focusContactForm', handler)
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }))
   }
 
-  const handleSubmit = (e) => {
+  const validate = () => {
+    const next = {}
+    if (!formData.name.trim()) next.name = 'field is required'
+    if (!formData.email.trim()) next.email = 'field is required'
+    else if (!EMAIL_REGEX.test(formData.email)) next.email = 'invalid email address'
+    if (!formData.phone.trim()) next.phone = 'field is required'
+    else if (!PHONE_REGEX.test(formData.phone) || formData.phone.replace(/\D/g, '').length < 10) next.phone = 'invalid phone number'
+    if (!formData.message.trim()) next.message = 'field is required'
+    setErrors(next)
+    return Object.keys(next).length === 0
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
+    if (!validate()) return
+
+    if (FORM_ENDPOINT.includes('YOUR_FORM_ID')) {
+      setErrors((prev) => ({ ...prev, submit: 'Form is not configured. Add VITE_FORMSPREE_ENDPOINT to your .env file with your Formspree form ID from formspree.io' }))
+      return
+    }
+
+    setSubmitting(true)
+    setErrors((prev) => ({ ...prev, submit: '' }))
+    try {
+      const formBody = new URLSearchParams({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        _replyto: formData.email,
+      })
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formBody.toString(),
+        redirect: 'manual', // Don't follow redirect - Formspree redirects to thanks page which has CORS issues
+      })
+      if (res.ok || res.type === 'opaqueredirect' || res.status === 302) {
+        setSubmitted(true)
+      } else {
+        const data = await res.json().catch(() => ({}))
+        const msg = data?.error || 'Something went wrong. Please try again or email us directly.'
+        setErrors((prev) => ({ ...prev, submit: msg }))
+      }
+    } catch (err) {
+      setErrors((prev) => ({
+        ...prev,
+        submit: 'Unable to send. Check your connection or email us directly at ' + CONTACT_EMAIL,
+      }))
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleSendNew = () => {
+    setSubmitted(false)
+    setFormData({ name: '', email: '', phone: '', message: '' })
+    setErrors({})
+  }
+
+  const handleClearForm = () => {
+    setFormData({ name: '', email: '', phone: '', message: '' })
+    setErrors({})
   }
 
   return (
     <>
       <section className="row  contact-form-row">
         <div className="col-xs-12">
-          <div className="card">
+          <div ref={formCardRef} className={`card${formHighlighted ? ' contact-form-card--highlighted' : ''}`}>
             <div className="card-block">
               {submitted ? (
                 <div className="contact-message contact-message--success">
@@ -36,6 +121,14 @@ function Contact() {
                     <strong>Thank you!</strong> Your message has been sent. We'll
                     get back to you within 1–2 business days.
                   </p>
+                  <button
+                    type="button"
+                    className="contact-message__send-new"
+                    onClick={handleSendNew}
+                  >
+                    <i className="fa fa-paper-plane contact-message__send-new-icon" aria-hidden="true" />
+                    Send New Message
+                  </button>
                 </div>
               ) : (
                 <form
@@ -53,12 +146,14 @@ function Contact() {
                           id="contact-name"
                           type="text"
                           name="name"
-                          className="form-control"
-                          placeholder="Your name"
+                          maxLength={30}
+                          className={`form-control${errors.name ? ' is-invalid' : ''}`}
+                          placeholder={errors.name || 'Your name'}
                           value={formData.name}
                           onChange={handleChange}
                           required
                         />
+                        {errors.name && <span className="contact-form__error">{errors.name}</span>}
                       </div>
                     </div>
                     <div className="col-xs-12  col-sm-6">
@@ -70,12 +165,14 @@ function Contact() {
                           id="contact-email"
                           type="email"
                           name="email"
-                          className="form-control"
-                          placeholder="you@example.com"
+                          maxLength={80}
+                          className={`form-control${errors.email ? ' is-invalid' : ''}`}
+                          placeholder={errors.email || 'you@example.com'}
                           value={formData.email}
                           onChange={handleChange}
                           required
                         />
+                        {errors.email && <span className="contact-form__error">{errors.email}</span>}
                       </div>
                     </div>
                   </div>
@@ -87,11 +184,13 @@ function Contact() {
                       id="contact-phone"
                       type="tel"
                       name="phone"
-                      className="form-control"
-                      placeholder="(555) 555-0123"
+                      className={`form-control${errors.phone ? ' is-invalid' : ''}`}
+                      placeholder={errors.phone || '(555) 555-0123'}
                       value={formData.phone}
                       onChange={handleChange}
+                      required
                     />
+                    {errors.phone && <span className="contact-form__error">{errors.phone}</span>}
                   </div>
                   <div className="form-group">
                     <label htmlFor="contact-message" className="form-control-label">
@@ -100,17 +199,30 @@ function Contact() {
                     <textarea
                       id="contact-message"
                       name="message"
-                      className="form-control"
+                      maxLength={2000}
+                      className={`form-control${errors.message ? ' is-invalid' : ''}`}
                       rows={5}
-                      placeholder="Describe your project, timeline, and any questions..."
+                      placeholder={errors.message || 'Describe your project, timeline, and any questions...'}
                       value={formData.message}
                       onChange={handleChange}
                       required
                     />
+                    {errors.message && <span className="contact-form__error">{errors.message}</span>}
                   </div>
-                  <button type="submit" className="btn btn-primary">
-                    Send message
-                  </button>
+                  {errors.submit && <p className="contact-form__error" style={{ marginTop: '0.5rem' }}>{errors.submit}</p>}
+                  <div className="contact-form__actions">
+                    <button type="submit" className="btn btn-primary" disabled={submitting}>
+                      {submitting ? 'Sending...' : 'Send message'}
+                    </button>
+                    <button
+                      type="button"
+                      className="contact-form__clear"
+                      onClick={handleClearForm}
+                    >
+                      <i className="fa fa-eraser contact-form__clear-icon" aria-hidden="true" />
+                      Clear form
+                    </button>
+                  </div>
                 </form>
               )}
             </div>

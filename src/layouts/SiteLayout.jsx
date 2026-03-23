@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { CallConfirmContext } from '../context/CallConfirmContext'
 import { shouldSkipCallConfirmation } from '../utils/callConfirm'
 
@@ -8,6 +8,7 @@ const logoPath = '/assets/images/colored-logo.png'
 const PHONE_NUMBER = '+17042191589'
 
 function SiteLayout() {
+  const location = useLocation()
   const [navOpen, setNavOpen] = useState(false)
   const [hoveredItem, setHoveredItem] = useState(null)
   const [showCallConfirm, setShowCallConfirm] = useState(false)
@@ -77,13 +78,25 @@ function SiteLayout() {
     if (key) setHoveredItem(key)
   }, [])
 
-  const makeLinkHandlers = useCallback((key) => ({
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleNavLeave,
-    onFocus: handleMouseEnter,
-    onBlur: handleNavLeave,
-    onClick: () => handleMobileClick(key),
-  }), [handleMouseEnter, handleNavLeave, handleMobileClick])
+  const handleFreeEstimateClick = useCallback((e) => {
+    if (location.pathname === '/contact') {
+      e.preventDefault()
+      window.dispatchEvent(new CustomEvent('focusContactForm'))
+    }
+  }, [location.pathname])
+
+  const makeLinkHandlers = useCallback((key) => {
+    const base = {
+      onMouseEnter: handleMouseEnter,
+      onMouseLeave: handleNavLeave,
+      onFocus: handleMouseEnter,
+      onBlur: handleNavLeave,
+    }
+    if (key === 'quote') {
+      return { ...base, onClick: (e) => { handleFreeEstimateClick(e); if (!e.defaultPrevented) handleMobileClick(key) } }
+    }
+    return { ...base, onClick: () => handleMobileClick(key) }
+  }, [handleMouseEnter, handleNavLeave, handleMobileClick, handleFreeEstimateClick])
 
   return (
     <CallConfirmContext.Provider value={callConfirmValue}>
@@ -223,7 +236,11 @@ function SiteLayout() {
               </ul>
             </nav>
             <div className="header__featured-link desktop-only-quote">
-              <NavLink className="btn  btn-primary" to="/contact">
+              <NavLink
+                className="btn  btn-primary"
+                to="/contact"
+                onClick={handleFreeEstimateClick}
+              >
                 Free Estimate
               </NavLink>
             </div>
@@ -268,7 +285,7 @@ function SiteLayout() {
                   </button>
                 </p>
                 <p>
-                  <a href="mailto:mark@vartanianconstruction.com" className="footer__email-link" aria-label="Email mark@vartanianconstruction.com">
+                  <a href="mailto:josiahstelzl@gmail.com" className="footer__email-link" aria-label="Email josiahstelzl@gmail.com">
                     <i className="fa  fa-envelope  fa-lg" aria-hidden="true"></i>
                     {' '}Email
                   </a>
