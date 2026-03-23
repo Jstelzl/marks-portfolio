@@ -191,6 +191,7 @@ function Home() {
           </div>
           <div className="quote-cta-boxes__button-box">
             <NavLink className="btn  quote-cta-boxes__button" to="/contact">
+              <i className="fa fa-calculator quote-cta-boxes__button-icon" aria-hidden="true" />
               <span className="quote-cta-boxes__button-text  quote-cta-boxes__button-text--full">
                 Get a Free Estimate
               </span>

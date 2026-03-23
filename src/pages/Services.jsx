@@ -1,13 +1,21 @@
-import PageHeader from '../components/PageHeader'
-import { services } from '../data/siteData'
+import { heroImage, services } from '../data/siteData'
 
 function Services() {
   return (
     <>
-      <PageHeader
-        title="Services"
-        subtitle="Residential and light commercial contracting done right."
-      />
+      <div
+        className="services-hero"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      >
+        <div className="services-hero__overlay">
+          <div className="container">
+            <h1 className="services-hero__title  display-1">Services</h1>
+            <p className="services-hero__subtitle">
+              Residential and light commercial contracting done right.
+            </p>
+          </div>
+        </div>
+      </div>
       <section className="row">
         <div className="col-xs-12 text-xs-center">
           <h2>Contracting Services</h2>
