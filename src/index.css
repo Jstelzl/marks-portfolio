@@ -1113,15 +1113,13 @@ div.call-confirm-actions {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Services page hero - full-bleed image to screen edges, text overlay */
+/* Services page hero - full-bleed solid (same gray-black as body/heading text) */
 .services-hero {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-bottom: 3.75rem;
   min-height: 14rem;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #333333;
   box-sizing: border-box;
 }
 
@@ -1130,11 +1128,7 @@ div.call-confirm-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.35) 0%,
-    rgba(0, 0, 0, 0.45) 100%
-  );
+  background: transparent;
   padding: 3rem 0;
 }
 
@@ -1148,14 +1142,12 @@ div.call-confirm-actions {
 .services-hero__title {
   margin: 0;
   color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .services-hero__subtitle {
   margin: 0.375rem 0 0;
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.95);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 /* Contact Us Today section (Home) - full-width gray background to viewport edges */
@@ -1538,6 +1530,25 @@ div.call-confirm-actions {
   color: #555555;
 }
 
+/* Home: CTA section with only the estimate button, centered */
+.quote-cta-boxes--button-only .quote-cta-boxes__inner {
+  align-items: center;
+  justify-content: center;
+}
+
+.quote-cta-boxes--button-only .quote-cta-boxes__button-box {
+  justify-content: center;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .quote-cta-boxes--button-only .quote-cta-boxes__inner {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
 /* Icon box spacing when stacked on mobile */
 .content-area .entry-content .icon-box {
   margin-bottom: 1rem;
@@ -1827,9 +1838,18 @@ div.call-confirm-actions {
   overflow-y: auto;
 }
 
-/* Contact page: stats + FAQ below form */
-.contact-form-row .quote-cta-boxes {
+/* Contact page: FAQ fills the column (no extra card shell) */
+.contact-form-row .contact-faq-section {
   margin-top: 2.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-form-row .contact-faq-section .contact-faq {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .quote-cta-boxes__button-text--short {

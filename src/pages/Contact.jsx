@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { contactFaqs, counters } from '../data/siteData'
+import { contactFaqs } from '../data/siteData'
 
 const CONTACT_EMAIL = 'josiahstelzl@gmail.com'
 const CONTACT_PHONE = '+1 (704) 219-1589'
@@ -245,60 +245,39 @@ function Contact() {
               </p>
             </div>
           </div>
-          <section className="quote-cta-boxes">
-            <div className="quote-cta-boxes__inner">
-              <div className="quote-cta-boxes__stats-box">
-                <div className="number-counters" data-speed="1400">
-                  {counters.map((counter) => (
-                    <div
-                      className={`number-counter number-counter--${counter.title.toLowerCase().replace(/\s+/g, '-')}`}
-                      key={counter.title}
-                    >
-                      <i className={`number-counter__icon  fa  ${counter.icon}`}></i>
+          <section className="contact-faq-section" aria-labelledby="contact-faq-heading">
+            <div className="contact-faq">
+              <h2 id="contact-faq-heading" className="contact-faq__title">
+                Frequently Asked Questions
+              </h2>
+              <div className="accordion">
+                {contactFaqs.map((faq, index) => {
+                  const isOpen = openFaqId === index
+                  return (
+                    <div className="accordion__panel" key={index}>
+                      <h4 className="panel-title">
+                        <button
+                          type="button"
+                          className={`contact-faq__toggle${isOpen ? '' : ' collapsed'}`}
+                          onClick={() => setOpenFaqId(isOpen ? null : index)}
+                          aria-expanded={isOpen}
+                          aria-controls={`faq-content-${index}`}
+                          id={`faq-trigger-${index}`}
+                        >
+                          {faq.question}
+                        </button>
+                      </h4>
                       <div
-                        className="number-counter__number  js-number"
-                        data-to={counter.number}
+                        id={`faq-content-${index}`}
+                        className={`accordion__content  collapse${isOpen ? ' in' : ''}`}
+                        role="region"
+                        aria-labelledby={`faq-trigger-${index}`}
                       >
-                        {counter.number}
+                        <div className="panel-body">{faq.answer}</div>
                       </div>
-                      <div className="number-counter__title">{counter.title}</div>
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="quote-cta-boxes__faq-box">
-                <div className="contact-faq">
-                  <h2 className="contact-faq__title">Frequently Asked Questions</h2>
-                  <div className="accordion">
-                    {contactFaqs.map((faq, index) => {
-                      const isOpen = openFaqId === index
-                      return (
-                        <div className="accordion__panel" key={index}>
-                          <h4 className="panel-title">
-                            <button
-                              type="button"
-                              className={`contact-faq__toggle${isOpen ? '' : ' collapsed'}`}
-                              onClick={() => setOpenFaqId(isOpen ? null : index)}
-                              aria-expanded={isOpen}
-                              aria-controls={`faq-content-${index}`}
-                              id={`faq-trigger-${index}`}
-                            >
-                              {faq.question}
-                            </button>
-                          </h4>
-                          <div
-                            id={`faq-content-${index}`}
-                            className={`accordion__content  collapse${isOpen ? ' in' : ''}`}
-                            role="region"
-                            aria-labelledby={`faq-trigger-${index}`}
-                          >
-                            <div className="panel-body">{faq.answer}</div>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
+                  )
+                })}
               </div>
             </div>
           </section>

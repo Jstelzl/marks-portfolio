@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import {
-  counters,
   portfolioItems,
   services,
 } from '../data/siteData'
@@ -168,27 +167,8 @@ function Home() {
         ))}
       </section>
 
-      <section className="quote-cta-boxes">
+      <section className="quote-cta-boxes  quote-cta-boxes--button-only">
         <div className="quote-cta-boxes__inner">
-          <div className="quote-cta-boxes__stats-box">
-            <div className="number-counters" data-speed="1400">
-              {counters.map((counter) => (
-                <div
-                  className={`number-counter number-counter--${counter.title.toLowerCase().replace(/\s+/g, '-')}`}
-                  key={counter.title}
-                >
-                  <i className={`number-counter__icon  fa  ${counter.icon}`}></i>
-                  <div
-                    className="number-counter__number  js-number"
-                    data-to={counter.number}
-                  >
-                    {counter.number}
-                  </div>
-                  <div className="number-counter__title">{counter.title}</div>
-                </div>
-              ))}
-            </div>
-          </div>
           <div className="quote-cta-boxes__button-box">
             <NavLink className="btn  quote-cta-boxes__button" to="/contact">
               <i className="fa fa-calculator quote-cta-boxes__button-icon" aria-hidden="true" />
